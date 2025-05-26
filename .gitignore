@@ -1,0 +1,9 @@
+*.x
+*a.out
+*.o
+*.txt
+*.vscode
+*.gitignore~
+*gcov
+*gcno
+*gcda
