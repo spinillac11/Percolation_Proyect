@@ -8,8 +8,52 @@
 
 typedef std::vector<int> Vec;
 
+struct UnionFind {
+    Vec labels;
+    int next_label;
+
+    //Consturctor
+    UnionFind(int n, int m){
+        labels = Vec(int(n*m/2), 0);
+        next_label = 1;
+    }
+
+    int Find(int ii){
+        int jj = ii;
+        int kk;
+        while (labels[jj] != jj)
+        {
+            jj = labels[jj];
+        }
+        while (labels[ii] != ii)
+        {
+            kk = labels[ii];
+            labels[ii] = jj;
+            ii = kk;
+        }
+        return jj;
+    }
+
+    int Union(int ii, int jj){
+        int parent_ii = Find(ii);
+        int parent_jj = Find(jj);
+        int min = std::min(parent_ii, parent_jj);
+        int max = std::max(parent_ii, parent_jj);
+        labels[max] = min;
+        return min;
+    }
+
+    int create_set(){
+        labels[next_label] = next_label;
+        int label = next_label;
+        next_label++;
+        return label;
+    }
+};
+
 void fill_laticce(Vec & lattice, double p, int seed);
 void print(Vec & lattice);
+void find_clusters(Vec & lattice);
 
 
 
@@ -24,7 +68,16 @@ int main(int argc, char **argv) {
     Vec Lattice(L*L, 0);  
 
     // Fill Lattice 
-    fill_laticce(Lattice, P, SEED());    
+    fill_laticce(Lattice, P, SEED());  
+    for (int y = 0; y < L; ++y) {
+        for (int x = 0; x < L; ++x) {
+            std::cout << Lattice[y * L + x] << ' ';
+        }
+        std::cout << '\n';
+    } 
+
+    // Find clusters
+    find_clusters(Lattice); 
 
     // Print Lattice 
     print(Lattice); 
@@ -32,30 +85,79 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-void fill_laticce(Vec & lattice, double p, int seed){
-
+void fill_laticce(Vec & lattice, double p, int seed)
+{
     int size = lattice.size();
 
     std::mt19937 gen(seed);
     std::bernoulli_distribution dist(p);  
 
-    for (int i = 0; i < size ; ++i) {
+    for (int i = 0; i < size ; ++i) 
+    {
         bool fill = dist(gen);
         lattice[i] = fill ? 1 : 0;  // 0 = lleno, 1 = abierto
     }
 }
 
-void print(Vec & lattice){
+void print(Vec & lattice)
+{
     int L = sqrt(lattice.size());
     // Open file
     std::ofstream outfile;
     outfile.open("lattice.txt");
 
-    for (int ii = 0; ii < L; ii++) {
-        for (int jj = 0; jj < L; jj++) {
-            outfile << lattice[ii * L + jj] << ' ';
+    for (int ii = 0; ii < L; ii++) 
+    {
+        for (int jj = 0; jj < L; jj++) 
+        {
+            outfile << lattice[ii*L + jj] << ' ';
         }
         outfile << '\n';
     }
     outfile.close();
+}
+
+void find_clusters(Vec & lattice)
+{
+    int L = sqrt(lattice.size());
+    UnionFind labels(L, L);
+
+    int label_left;
+    int label_up;
+
+    for (int ii = 0; ii < L; ii++) 
+    {
+        for (int jj = 0; jj < L; jj++) 
+        {
+            int idx = ii*L + jj; // Index
+            
+            if (lattice[ii*L + jj] == 0) continue;
+
+            label_left = (jj > 0) ? lattice[idx - 1] : 0;
+            label_up = (ii > 0) ? lattice[idx - L] : 0;
+            
+            if(label_left==0 && label_up==0){
+                // nuevo clúster
+                lattice[idx] = labels.create_set();
+            }
+            else if(label_left>0 && label_up==0){
+                lattice[idx] = label_left;
+            }
+            else if(label_left==0 && label_up>0){
+                lattice[idx] = label_up;
+            }
+            else
+            {
+                lattice[idx] = labels.Union(label_up, label_left);
+            }
+        }
+    }
+
+    // Join clusters
+    for (int i = 0; i < L*L; i++)
+    {
+        if(lattice[i] > 0){
+            lattice[i] = labels.Find(lattice[i]);
+        }
+    }
 }
