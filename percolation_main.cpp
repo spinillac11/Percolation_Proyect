@@ -66,7 +66,7 @@ struct UnionFind {
     }
 };
 
-void fill_laticce(Vec & lattice, double p, int seed);
+void fill_laticce(Vec & lattice, double p);
 void print(Vec & lattice);
 void find_clusters(Vec & lattice);
 
@@ -77,13 +77,13 @@ int main(int argc, char **argv) {
     const int L = std::atoi(argv[1]);
     const double P = std::atof(argv[2]); 
     // const int SEED = std::atoi(argv[3]);
-    std::random_device SEED;
+    
 
     // Generate Lattice
     Vec Lattice(L*L, 0);  
 
     // Fill Lattice 
-    fill_laticce(Lattice, P, SEED());  
+    fill_laticce(Lattice, P);  
     for (int y = 0; y < L; ++y) {
         for (int x = 0; x < L; ++x) {
             std::cout << Lattice[y * L + x] << ' ';
@@ -101,11 +101,12 @@ int main(int argc, char **argv) {
     return 0;
 }
 
-void fill_laticce(Vec & lattice, double p, int seed)
+void fill_laticce(Vec & lattice, double p)
 {
     int size = lattice.size();
 
-    std::mt19937 gen(seed);
+    std::random_device SEED;
+    std::mt19937 gen(SEED());
     std::bernoulli_distribution dist(p);  
 
     for (int i = 0; i < size ; ++i) 
