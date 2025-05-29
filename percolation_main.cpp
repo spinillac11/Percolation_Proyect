@@ -50,20 +50,7 @@ struct UnionFind {
         return next_label++;
     }
 
-    void sort_ids(){
-        std::set<int> unique_ids(parent.begin(), parent.end());
-
-        std::map<int, int> sort;
-        int next_id = 0;
-        for(auto & x : unique_ids){
-            sort[x] = next_id;
-            next_id++;
-        }
-
-        for(auto & x : parent){
-            x = sort[x];
-        }
-    }
+    
 };
 
 void fill_laticce(Vec & lattice, double p);
@@ -76,8 +63,6 @@ int main(int argc, char **argv) {
     // read parameters
     const int L = std::atoi(argv[1]);
     const double P = std::atof(argv[2]); 
-    // const int SEED = std::atoi(argv[3]);
-    
 
     // Generate Lattice
     Vec Lattice(L*L, 0);  
@@ -169,27 +154,24 @@ void find_clusters(Vec & lattice)
             }
         }
     }
-    for (int y = 0; y < L; ++y) {
-        for (int x = 0; x < L; ++x) {
-            std::cout << lattice[y * L + x] << ' ';
-        }
-        std::cout << '\n';
-    } 
-    std::cout << '\n';
 
-    // Join clusters
-    for (int i = 0; i < L*L; i++)
-    {
-        if(lattice[i] > 0){
-            lattice[i] = labels.Find(lattice[i]);
+    // Join and sort clusters
+    for(auto & i : lattice){
+        if(i > 0){
+            i = labels.Find(i);
         }
     }
 
-    for (int y = 0; y < L; ++y) {
-        for (int x = 0; x < L; ++x) {
-            std::cout << lattice[y * L + x] << ' ';
-        }
-        std::cout << '\n';
-    } 
-    std::cout << '\n';
+    std::set<int> unique_ids(lattice.begin(), lattice.end());
+
+    std::map<int, int> sort;
+    int next_id = 0;
+    for(auto & x : unique_ids){
+        sort[x] = next_id;
+        next_id++;
+    }
+
+    for(auto & x : lattice){
+        x = sort[x];
+    }
 }
