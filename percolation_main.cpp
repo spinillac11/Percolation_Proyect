@@ -9,6 +9,7 @@
 #include <map>
 
 typedef std::vector<int> Vec;
+typedef std::map<int,int> Map;
 
 struct UnionFind {
     Vec parent;
@@ -55,7 +56,7 @@ struct UnionFind {
 
 void fill_laticce(Vec & lattice, double p);
 void print(Vec & lattice);
-void find_clusters(Vec & lattice);
+void find_clusters(Vec & lattice, Map & size);
 
 
 
@@ -65,10 +66,15 @@ int main(int argc, char **argv) {
     const double P = std::atof(argv[2]); 
 
     // Generate Lattice
-    Vec Lattice(L*L, 0);  
+    Vec Lattice(L*L, 0);
+    
+    // Generate map for cluster size
+    Map cluster_size;   
 
     // Fill Lattice 
-    fill_laticce(Lattice, P);  
+    fill_laticce(Lattice, P);
+
+    // Print Lattice in console  
     for (int y = 0; y < L; ++y) {
         for (int x = 0; x < L; ++x) {
             std::cout << Lattice[y * L + x] << ' ';
@@ -77,11 +83,17 @@ int main(int argc, char **argv) {
     } 
     std::cout << '\n';
 
-    // Find clusters
-    find_clusters(Lattice); 
+    // Find clusters 
+    find_clusters(Lattice, cluster_size); 
 
-    // Print Lattice 
+    // Print Lattice with clusters
     print(Lattice); 
+
+    // Print each cluster size
+    std::cout << "Cluster size:" << std::endl;
+    for (const auto& [cluster, size] : cluster_size) {
+        std::cout << cluster << "\t" << size << std::endl; 
+    }
 
     return 0;
 }
@@ -119,7 +131,7 @@ void print(Vec & lattice)
     outfile.close();
 }
 
-void find_clusters(Vec & lattice)
+void find_clusters(Vec & lattice,  Map & size)
 {
     int L = sqrt(lattice.size());
     UnionFind labels(int(L*L/2));
@@ -133,7 +145,7 @@ void find_clusters(Vec & lattice)
         {
             int idx = ii*L + jj; // Index
             
-            if (lattice[ii*L + jj] == 0) continue;
+            if (lattice[idx] == 0) continue;
 
             label_left = (jj > 0) ? lattice[idx - 1] : 0;
             label_up = (ii > 0) ? lattice[idx - L] : 0;
@@ -164,7 +176,7 @@ void find_clusters(Vec & lattice)
 
     std::set<int> unique_ids(lattice.begin(), lattice.end());
 
-    std::map<int, int> sort;
+    Map sort;
     int next_id = 0;
     for(auto & x : unique_ids){
         sort[x] = next_id;
@@ -173,5 +185,6 @@ void find_clusters(Vec & lattice)
 
     for(auto & x : lattice){
         x = sort[x];
+        size[x]++; // Count cluster size
     }
 }
