@@ -5,30 +5,32 @@
 #include <cstdlib>
 #include <vector>
 #include <fstream>
+#include <set>
+#include <map>
 
 typedef std::vector<int> Vec;
 
 struct UnionFind {
-    Vec labels;
+    Vec parent;
     int next_label;
 
     //Consturctor
-    UnionFind(int n, int m){
-        labels = Vec(int(n*m/2), 0);
+    UnionFind(int max_labels){
+        parent = Vec(max_labels, 0);
         next_label = 1;
     }
 
     int Find(int ii){
         int jj = ii;
         int kk;
-        while (labels[jj] != jj)
+        while (parent[jj] != jj)
         {
-            jj = labels[jj];
+            jj = parent[jj];
         }
-        while (labels[ii] != ii)
+        while (parent[ii] != ii)
         {
-            kk = labels[ii];
-            labels[ii] = jj;
+            kk = parent[ii];
+            parent[ii] = jj;
             ii = kk;
         }
         return jj;
@@ -39,15 +41,28 @@ struct UnionFind {
         int parent_jj = Find(jj);
         int min = std::min(parent_ii, parent_jj);
         int max = std::max(parent_ii, parent_jj);
-        labels[max] = min;
+        parent[max] = min;
         return min;
     }
 
     int create_set(){
-        labels[next_label] = next_label;
-        int label = next_label;
-        next_label++;
-        return label;
+        parent[next_label] = next_label;
+        return next_label++;
+    }
+
+    void sort_ids(){
+        std::set<int> unique_ids(parent.begin(), parent.end());
+
+        std::map<int, int> sort;
+        int next_id = 0;
+        for(auto & x : unique_ids){
+            sort[x] = next_id;
+            next_id++;
+        }
+
+        for(auto & x : parent){
+            x = sort[x];
+        }
     }
 };
 
@@ -75,6 +90,7 @@ int main(int argc, char **argv) {
         }
         std::cout << '\n';
     } 
+    std::cout << '\n';
 
     // Find clusters
     find_clusters(Lattice); 
@@ -120,7 +136,7 @@ void print(Vec & lattice)
 void find_clusters(Vec & lattice)
 {
     int L = sqrt(lattice.size());
-    UnionFind labels(L, L);
+    UnionFind labels(int(L*L/2));
 
     int label_left;
     int label_up;
@@ -152,6 +168,13 @@ void find_clusters(Vec & lattice)
             }
         }
     }
+    for (int y = 0; y < L; ++y) {
+        for (int x = 0; x < L; ++x) {
+            std::cout << lattice[y * L + x] << ' ';
+        }
+        std::cout << '\n';
+    } 
+    std::cout << '\n';
 
     // Join clusters
     for (int i = 0; i < L*L; i++)
@@ -160,4 +183,12 @@ void find_clusters(Vec & lattice)
             lattice[i] = labels.Find(lattice[i]);
         }
     }
+
+    for (int y = 0; y < L; ++y) {
+        for (int x = 0; x < L; ++x) {
+            std::cout << lattice[y * L + x] << ' ';
+        }
+        std::cout << '\n';
+    } 
+    std::cout << '\n';
 }
