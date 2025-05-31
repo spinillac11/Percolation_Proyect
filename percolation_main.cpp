@@ -8,6 +8,7 @@
 #include <set>
 #include <map>
 
+// Declaration
 typedef std::vector<int> Vec;
 typedef std::map<int,int> Map;
 
