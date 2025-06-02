@@ -15,7 +15,7 @@ struct UnionFind {
     Vec parent;
     int next_label;
 
-    //Consturctor
+    //Constructor
     UnionFind(int max_labels){
         parent = Vec(max_labels, 0);
         next_label = 1;
