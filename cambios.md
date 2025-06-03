@@ -1,17 +1,21 @@
 Cambios hechos en la rama Bryan/Add/Makefile-test-modularization
 
 ## 1. Modularizacion
-- Creación de archivos `.h` en el directorio `include` con la declaración de las funciones, clase, vectores y mapas.
-- Creación de los ejecutables `.cpp` en el directorio `src` con las funciones y la clase.
+- Declaración de `functions.h`, `UnionFind.h` y `vec_maps.h` en `/include` con la declaración..
+- Implementación de los `.cpp` en `/src` con las funciones y la clase.
+
+En esta parte se cambiaron algunos nombres de funciones, métodos y variables para estandarizarlo. 
 
 ## 2. Makefile
+- Creación de los `.o` en `/build` a partir de las fuentes en `/src`.
+- Ejecución de los `.o` para crear `program.x`.
+- Limpieza de los ejecutables en `\build`.
 
 
 
 
-
-
-
+### Notas
+pequeña guía para *markdown*
 `code` ingresando [aqui]((https://www.example.com))
 
 | Syntax | Description |

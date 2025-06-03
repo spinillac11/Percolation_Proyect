@@ -15,15 +15,18 @@ program.x: $(OBJ)/main.o $(OBJ)/functions.o $(OBJ)/UnionFind.o
 
 $(OBJ)/main.o: $(SRC)/main.cpp
 	@echo "Creating main.o"
+	@mkdir -p $(OBJ)
 	$(CXX) $(CXXFLAGS) -c $(SRC)/main.cpp -o $@
 
 
 $(OBJ)/functions.o: $(SRC)/functions.cpp
 	@echo "Creating functions.o"
+	@mkdir -p $(OBJ)
 	$(CXX) $(CXXFLAGS) -c $(SRC)/functions.cpp -o $@
 	
 $(OBJ)/UnionFind.o: $(SRC)/UnionFind.cpp
 	@echo "Creating UnionFind.o"
+	@mkdir -p $(OBJ)
 	$(CXX) $(CXXFLAGS) -c $(SRC)/UnionFind.cpp -o $@
 
 clean:
