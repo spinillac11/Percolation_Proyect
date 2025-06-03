@@ -232,4 +232,3 @@ Vec detec_perc(const Vec & lattice) {
     // Convertir set a vector
     return std::vector<int>(percolantes.begin(), percolantes.end());
 }
-
