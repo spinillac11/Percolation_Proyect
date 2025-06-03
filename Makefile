@@ -1,0 +1,31 @@
+# Compilator
+CXX = g++
+INC = include
+CXXFLAGS = -std=c++17 -Wall -g -I$(INC)
+SANITIZERS = -fsanitize=address,leak,undefined
+
+# Directories
+SRC = src
+OBJ = build
+
+program.x: $(OBJ)/main.o $(OBJ)/functions.o $(OBJ)/UnionFind.o
+	@echo "Linking .o to create program.x"
+	$(CXX) $(CXXFLAGS) $(OBJ)/main.o $(OBJ)/functions.o $(OBJ)/UnionFind.o -o $@
+
+
+$(OBJ)/main.o: $(SRC)/main.cpp
+	@echo "Creating main.o"
+	$(CXX) $(CXXFLAGS) -c $(SRC)/main.cpp -o $@
+
+
+$(OBJ)/functions.o: $(SRC)/functions.cpp
+	@echo "Creating functions.o"
+	$(CXX) $(CXXFLAGS) -c $(SRC)/functions.cpp -o $@
+	
+$(OBJ)/UnionFind.o: $(SRC)/UnionFind.cpp
+	@echo "Creating UnionFind.o"
+	$(CXX) $(CXXFLAGS) -c $(SRC)/UnionFind.cpp -o $@
+
+clean:
+	@echo "Cleaning /build"
+	rm -f $(OBJ)/*.o program.x

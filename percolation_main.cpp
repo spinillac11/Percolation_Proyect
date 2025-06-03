@@ -1,11 +1,14 @@
 #include <iostream>
-#include <ctime>
-#include <random>
+#include <ctime> 
+#include <random> //check
 #include <cmath>
-#include <cstdlib>
-#include <vector>
-#include <fstream>
+#include <cstdlib> // check (atoi)
+
+#include <fstream> //check
 #include <set>
+
+// Vec_maps.h check
+#include <vector>
 #include <map>
 
 // Declaration
@@ -16,7 +19,7 @@ struct UnionFind {
     Vec parent;
     int next_label;
 
-    //Consturctor
+    //Constuctor    
     UnionFind(int max_labels){
         parent = Vec(max_labels, 0);
         next_label = 1;
@@ -48,7 +51,7 @@ struct UnionFind {
     }
 
     int create_set(){
-        parent[next_label] = next_label;
+        parent[next_label] = next_label;    
         return next_label++;
     }
 
@@ -63,8 +66,8 @@ void find_clusters(Vec & lattice, Map & size);
 
 int main(int argc, char **argv) {
     // read parameters
-    const int L = std::atoi(argv[1]);
-    const double P = std::atof(argv[2]); 
+    const int L = std::atoi(argv[1]); // Grid size
+    const double P = std::atof(argv[2]); // Filling probability 0 \leq p \leq 1
 
     // Generate Lattice
     Vec Lattice(L*L, 0);
@@ -91,7 +94,7 @@ int main(int argc, char **argv) {
     print(Lattice); 
 
     // Print each cluster size
-    std::cout << "Cluster size:" << std::endl;
+    std::cout << "Cluster" << "\t" << "size:" << std::endl;
     for (const auto& [cluster, size] : cluster_size) {
         std::cout << cluster << "\t" << size << std::endl; 
     }
@@ -188,4 +191,4 @@ void find_clusters(Vec & lattice,  Map & size)
         x = sort[x];
         size[x]++; // Count cluster size
     }
-}
+} 
