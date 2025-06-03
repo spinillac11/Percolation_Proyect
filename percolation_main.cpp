@@ -15,7 +15,7 @@ struct UnionFind {
     Vec parent;
     int next_label;
 
-    //Consturctor
+    //Constructor
     UnionFind(int max_labels){
         parent = Vec(max_labels, 0);
         next_label = 1;
@@ -57,7 +57,7 @@ struct UnionFind {
 void fill_laticce(Vec & lattice, double p);
 void print(Vec & lattice);
 void find_clusters(Vec & lattice, Map & size);
-
+Vec detec_perc(const Vec & lattice);
 
 
 int main(int argc, char **argv) {
@@ -91,10 +91,18 @@ int main(int argc, char **argv) {
 
     // Print each cluster size
     std::cout << "Cluster size:" << std::endl;
-    for (const auto& [cluster, size] : cluster_size) {
+    for (const auto & [cluster, size] : cluster_size) {
         std::cout << cluster << "\t" << size << std::endl; 
     }
 
+    Vec percol = detec_perc(Lattice);
+
+    std::cout << "The Clusters that percolate are:" << std::endl;
+    for (int i = 0; i < percol.size(); i++) {
+        std::cout << percol[i] << std::endl;
+    } 
+
+    
     return 0;
 }
 
@@ -188,3 +196,40 @@ void find_clusters(Vec & lattice,  Map & size)
         size[x]++; // Count cluster size
     }
 }
+
+Vec detec_perc(const Vec & lattice) {
+
+    int L = sqrt(lattice.size());
+    std::set<int> top_row, bottom_row, left_col, right_col, percolantes;
+ 
+    // Vertical
+    for (int x = 0; x < L; ++x) {
+        if (lattice[x] > 0)              top_row.insert(lattice[x]);
+        if (lattice[(L - 1) * L + x] > 0) bottom_row.insert(lattice[(L - 1) * L + x]);
+    }
+
+    // Horizontal
+    for (int y = 0; y < L; ++y) {
+        if (lattice[y * L] > 0)              left_col.insert(lattice[y * L]);
+        if (lattice[y * L + (L - 1)] > 0)    right_col.insert(lattice[y * L + (L - 1)]);
+    }
+
+    // Comparar etiquetas comunes entre bordes
+    for (int label : top_row) {
+        if (bottom_row.count(label)) {
+            percolantes.insert(label);
+        }
+    }
+    for (int label : left_col) {
+        if (right_col.count(label)) {
+            percolantes.insert(label);
+        }
+    }
+
+    // Si no hay percolantes, retornar {0}
+    if (percolantes.empty()) return {0}; 
+
+    // Convertir set a vector
+    return std::vector<int>(percolantes.begin(), percolantes.end());
+}
+
