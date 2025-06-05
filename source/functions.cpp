@@ -15,7 +15,7 @@ void fill_laticce(Vec & lattice, double p)
     }
 }
 
-void print(Vec & lattice)
+void print(const Vec & lattice)
 {
     int L = sqrt(lattice.size());
     // Open file
@@ -33,6 +33,9 @@ void print(Vec & lattice)
     outfile.close();
 }
 
+/*
+* UnionFind algorithm implementation
+*/
 int Find(Vec & parent, int ii){
     int jj = ii;
     int kk;
@@ -58,19 +61,13 @@ int Union(Vec & parent, int ii, int jj){
     return min;
 }
 
-int create_set(Vec & parent, int & next_label){
-    parent[next_label] = next_label;
-    return next_label++;
-}
-
-Map find_clusters(Vec & lattice)
-{
+/*
+* Hoshen-Kopelman algorithm implementation
+*/
+Vec HoshenKopelman(Vec & lattice){
     int L = sqrt(lattice.size());
     Vec labels(int(L*L/2), 0);
-    int next_label = 1; 
-
-    Map size;
-
+    int next_label = 1;
     int label_left;
     int label_up;
 
@@ -86,8 +83,9 @@ Map find_clusters(Vec & lattice)
             label_up = (ii > 0) ? lattice[idx - L] : 0;
             
             if(label_left==0 && label_up==0){
-                // nuevo clúster
-                lattice[idx] = create_set(labels, next_label);
+                // new cluster
+                labels[next_label] = next_label;
+                lattice[idx] = next_label++;
             }
             else if(label_left>0 && label_up==0){
                 lattice[idx] = label_left;
@@ -101,6 +99,13 @@ Map find_clusters(Vec & lattice)
             }
         }
     }
+
+    return labels;
+}
+
+Map find_clusters(Vec & lattice){
+    Vec labels = HoshenKopelman(lattice);
+    Map size;
 
     // Join and sort clusters
     for(auto & i : lattice){

@@ -14,9 +14,9 @@ typedef std::map<int,int> Map;
 
 
 void fill_laticce(Vec & lattice, double p);
-void print(Vec & lattice);
+void print(const Vec & lattice);
 int Find(Vec & parent, int ii);
 int Union(Vec & parent, int ii, int jj);
-int create_set(Vec & parent, int & next_label);
+Vec HoshenKopelman(Vec & lattice);
 Map find_clusters(Vec & lattice);
 Vec detec_perc(const Vec & lattice);
