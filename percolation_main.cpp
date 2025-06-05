@@ -11,51 +11,12 @@
 typedef std::vector<int> Vec;
 typedef std::map<int,int> Map;
 
-struct UnionFind {
-    Vec parent;
-    int next_label;
-
-    //Constructor
-    UnionFind(int max_labels){
-        parent = Vec(max_labels, 0);
-        next_label = 1;
-    }
-
-    int Find(int ii){
-        int jj = ii;
-        int kk;
-        while (parent[jj] != jj)
-        {
-            jj = parent[jj];
-        }
-        while (parent[ii] != ii)
-        {
-            kk = parent[ii];
-            parent[ii] = jj;
-            ii = kk;
-        }
-        return jj;
-    }
-
-    int Union(int ii, int jj){
-        int parent_ii = Find(ii);
-        int parent_jj = Find(jj);
-        int min = std::min(parent_ii, parent_jj);
-        int max = std::max(parent_ii, parent_jj);
-        parent[max] = min;
-        return min;
-    }
-
-    int create_set(){
-        parent[next_label] = next_label;
-        return next_label++;
-    }
-
-    
-};
 
 void fill_laticce(Vec & lattice, double p);
 void print(Vec & lattice);
+int Find(Vec & parent, int ii);
+int Union(Vec & parent, int ii, int jj);
+int create_set(Vec & parent, int & next_label);
 Map find_clusters(Vec & lattice);
 Vec detec_perc(const Vec & lattice);
 
@@ -139,10 +100,41 @@ void print(Vec & lattice)
     outfile.close();
 }
 
+int Find(Vec & parent, int ii){
+    int jj = ii;
+    int kk;
+    while (parent[jj] != jj)
+    {
+        jj = parent[jj];
+    }
+    while (parent[ii] != ii)
+    {
+        kk = parent[ii];
+        parent[ii] = jj;
+        ii = kk;
+    }
+    return jj;
+}
+
+int Union(Vec & parent, int ii, int jj){
+    int parent_ii = Find(parent, ii);
+    int parent_jj = Find(parent, jj);
+    int min = std::min(parent_ii, parent_jj);
+    int max = std::max(parent_ii, parent_jj);
+    parent[max] = min;
+    return min;
+}
+
+int create_set(Vec & parent, int & next_label){
+    parent[next_label] = next_label;
+    return next_label++;
+}
+
 Map find_clusters(Vec & lattice)
 {
     int L = sqrt(lattice.size());
-    UnionFind labels(int(L*L/2));
+    Vec labels(int(L*L/2), 0);
+    int next_label = 1; 
 
     Map size;
 
@@ -162,7 +154,7 @@ Map find_clusters(Vec & lattice)
             
             if(label_left==0 && label_up==0){
                 // nuevo clúster
-                lattice[idx] = labels.create_set();
+                lattice[idx] = create_set(labels, next_label);
             }
             else if(label_left>0 && label_up==0){
                 lattice[idx] = label_left;
@@ -172,7 +164,7 @@ Map find_clusters(Vec & lattice)
             }
             else
             {
-                lattice[idx] = labels.Union(label_up, label_left);
+                lattice[idx] = Union(labels,label_up, label_left);
             }
         }
     }
@@ -180,7 +172,7 @@ Map find_clusters(Vec & lattice)
     // Join and sort clusters
     for(auto & i : lattice){
         if(i > 0){
-            i = labels.Find(i);
+            i = Find(labels, i);
         }
     }
 

@@ -1,12 +1,6 @@
-#include "functions.h"
-#include "UnionFind.h"
-#include <random>
-#include <fstream>
-#include <set>
+#include "declarations.h"
 
-
-// Fill the laticce given the fill probability p
-void fillLaticce(Vec & lattice, double p)
+void fill_laticce(Vec & lattice, double p)
 {
     int size = lattice.size();
 
@@ -14,22 +8,19 @@ void fillLaticce(Vec & lattice, double p)
     std::mt19937 gen(SEED());
     std::bernoulli_distribution dist(p);  
 
-    for (int i = 0; i < size ; ++i){
+    for (int i = 0; i < size ; ++i) 
+    {
         bool fill = dist(gen);
-        lattice[i] = fill ? 1 : 0;  // 0 = full, 1 = open
+        lattice[i] = fill ? 1 : 0;  // 0 = lleno, 1 = abierto
     }
 }
 
-// Save in a .txt the lattice
-// 0 = full
-// 1 = open
-void saveLattice(Vec & lattice)
+void print(Vec & lattice)
 {
     int L = sqrt(lattice.size());
-
     // Open file
     std::ofstream outfile;
-    outfile.open("lattice_mod.txt");
+    outfile.open("lattice.txt");
 
     for (int ii = 0; ii < L; ii++) 
     {
@@ -39,17 +30,49 @@ void saveLattice(Vec & lattice)
         }
         outfile << '\n';
     }
-    // Close file
     outfile.close();
 }
 
-// 
-void findClusters(Vec & lattice,  Map & size)
+int Find(Vec & parent, int ii){
+    int jj = ii;
+    int kk;
+    while (parent[jj] != jj)
+    {
+        jj = parent[jj];
+    }
+    while (parent[ii] != ii)
+    {
+        kk = parent[ii];
+        parent[ii] = jj;
+        ii = kk;
+    }
+    return jj;
+}
+
+int Union(Vec & parent, int ii, int jj){
+    int parent_ii = Find(parent, ii);
+    int parent_jj = Find(parent, jj);
+    int min = std::min(parent_ii, parent_jj);
+    int max = std::max(parent_ii, parent_jj);
+    parent[max] = min;
+    return min;
+}
+
+int create_set(Vec & parent, int & next_label){
+    parent[next_label] = next_label;
+    return next_label++;
+}
+
+Map find_clusters(Vec & lattice)
 {
     int L = sqrt(lattice.size());
-    UnionFind labels(int(L*L/2));
+    Vec labels(int(L*L/2), 0);
+    int next_label = 1; 
 
-    int label_left, label_up;
+    Map size;
+
+    int label_left;
+    int label_up;
 
     for (int ii = 0; ii < L; ii++) 
     {
@@ -64,7 +87,7 @@ void findClusters(Vec & lattice,  Map & size)
             
             if(label_left==0 && label_up==0){
                 // nuevo clúster
-                lattice[idx] = labels.createSet();
+                lattice[idx] = create_set(labels, next_label);
             }
             else if(label_left>0 && label_up==0){
                 lattice[idx] = label_left;
@@ -74,7 +97,7 @@ void findClusters(Vec & lattice,  Map & size)
             }
             else
             {
-                lattice[idx] = labels.unionSet(label_up, label_left);
+                lattice[idx] = Union(labels,label_up, label_left);
             }
         }
     }
@@ -82,7 +105,7 @@ void findClusters(Vec & lattice,  Map & size)
     // Join and sort clusters
     for(auto & i : lattice){
         if(i > 0){
-            i = labels.findSet(i);
+            i = Find(labels, i);
         }
     }
 
@@ -99,4 +122,44 @@ void findClusters(Vec & lattice,  Map & size)
         x = sort[x];
         size[x]++; // Count cluster size
     }
+
+    return size;
 }
+
+Vec detec_perc(const Vec & lattice) {
+
+    int L = sqrt(lattice.size());
+    std::set<int> top_row, bottom_row, left_col, right_col, percolantes;
+ 
+    // Vertical
+    for (int x = 0; x < L; ++x) {
+        if (lattice[x] > 0)              top_row.insert(lattice[x]);
+        if (lattice[(L - 1) * L + x] > 0) bottom_row.insert(lattice[(L - 1) * L + x]);
+    }
+
+    // Horizontal
+    for (int y = 0; y < L; ++y) {
+        if (lattice[y * L] > 0)              left_col.insert(lattice[y * L]);
+        if (lattice[y * L + (L - 1)] > 0)    right_col.insert(lattice[y * L + (L - 1)]);
+    }
+
+    // Comparar etiquetas comunes entre bordes
+    for (int label : top_row) {
+        if (bottom_row.count(label)) {
+            percolantes.insert(label);
+        }
+    }
+    for (int label : left_col) {
+        if (right_col.count(label)) {
+            percolantes.insert(label);
+        }
+    }
+
+    // Si no hay percolantes, retornar {0}
+    if (percolantes.empty()) return {0}; 
+
+    // Convertir set a vector
+    return std::vector<int>(percolantes.begin(), percolantes.end());
+}
+
+
