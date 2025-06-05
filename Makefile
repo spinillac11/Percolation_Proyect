@@ -16,6 +16,9 @@ $(EXE): $(OBJ)/main.o $(OBJ)/functions.o
 	@echo "Linking .o to create $(EXE)"
 	$(CXX) $(CXXFLAGS) $(OBJ)/main.o $(OBJ)/functions.o -o $@
 
+test.x: $(OBJ)/test.o $(OBJ)/functions.o
+	@echo "Linking .o to create $@"
+	$(CXX) $(CXXFLAGS) $(OBJ)/test.o $(OBJ)/functions.o -o $@ -l Catch2Main -l Catch2
 
 $(OBJ)/main.o: $(SRC)/main.cpp
 	@echo "Creating main.o"
@@ -27,6 +30,11 @@ $(OBJ)/functions.o: $(SRC)/functions.cpp
 	@echo "Creating functions.o"
 	@mkdir -p $(OBJ)
 	$(CXX) $(CXXFLAGS) -c $(SRC)/functions.cpp -o $@
+
+$(OBJ)/test.o: $(SRC)/test.cpp 
+	@echo "Creating test.o"
+	@mkdir -p $(OBJ)
+	$(CXX) $(CXXFLAGS) -c $(SRC)/test.cpp -o $@
 
 run: $(EXE)
 	@echo
@@ -47,6 +55,9 @@ simul: $(EXE)
 	@echo "==> Generando 'cluster.pdf' desde 'lattice.txt'..."
 	python3 graphics/simul.py lattice.txt cluster.pdf
 	@echo "==> Listo: cluster.pdf creado."
+
+test: test.x
+	./$< 
 
 clean:
 	@echo "Cleaning /build"
