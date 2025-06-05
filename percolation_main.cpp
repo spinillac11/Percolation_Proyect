@@ -56,7 +56,7 @@ struct UnionFind {
 
 void fill_laticce(Vec & lattice, double p);
 void print(Vec & lattice);
-void find_clusters(Vec & lattice, Map & size);
+Map find_clusters(Vec & lattice);
 Vec detec_perc(const Vec & lattice);
 
 
@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
     std::cout << '\n';
 
     // Find clusters 
-    find_clusters(Lattice, cluster_size); 
+    cluster_size = find_clusters(Lattice); 
 
     // Print Lattice with clusters
     print(Lattice); 
@@ -139,10 +139,12 @@ void print(Vec & lattice)
     outfile.close();
 }
 
-void find_clusters(Vec & lattice,  Map & size)
+Map find_clusters(Vec & lattice)
 {
     int L = sqrt(lattice.size());
     UnionFind labels(int(L*L/2));
+
+    Map size;
 
     int label_left;
     int label_up;
@@ -195,6 +197,8 @@ void find_clusters(Vec & lattice,  Map & size)
         x = sort[x];
         size[x]++; // Count cluster size
     }
+
+    return size;
 }
 
 Vec detec_perc(const Vec & lattice) {
