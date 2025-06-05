@@ -41,6 +41,13 @@ run: $(EXE)
 	echo; \
 	echo "  Listo: se creó 'lattice.txt' y 'cluster.pdf'."
 
+simul: $(EXE)
+	@echo "==> Ejecutando simulación con N=4, p=0.6"
+	./$(EXE) 4 0.6
+	@echo "==> Generando 'cluster.pdf' desde 'lattice.txt'..."
+	python3 graphics/simul.py lattice.txt cluster.pdf
+	@echo "==> Listo: cluster.pdf creado."
+
 clean:
 	@echo "Cleaning /build"
 	rm -f $(OBJ)/*.o *.x *.pdf *.txt
