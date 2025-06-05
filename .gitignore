@@ -4,6 +4,11 @@ a.out
 *.txt
 *.vscode
 *.gitignore~
-*gcov
-*gcno
-*gcda
+*.gcov
+*.gcno
+*.gcda
+*.svg
+*.folded
+*.perf
+*.data
+*.old
