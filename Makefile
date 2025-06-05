@@ -1,15 +1,19 @@
 # Compilator
 CXX = g++
 INC = include
-CXXFLAGS = -std=c++17 -Wall -g -I$(INC)
 SANITIZERS = -fsanitize=address,leak,undefined
+CXXFLAGS = -std=c++17 -Wall -g -I$(INC) $(SANITIZERS)
+
 
 # Directories
-SRC = src
+SRC = source
 OBJ = build
 
-program.x: $(OBJ)/main.o $(OBJ)/functions.o 
-	@echo "Linking .o to create program.x"
+# executable
+EXE = program.x
+
+$(EXE): $(OBJ)/main.o $(OBJ)/functions.o 
+	@echo "Linking .o to create $(EXE)"
 	$(CXX) $(CXXFLAGS) $(OBJ)/main.o $(OBJ)/functions.o -o $@
 
 
@@ -24,7 +28,19 @@ $(OBJ)/functions.o: $(SRC)/functions.cpp
 	@mkdir -p $(OBJ)
 	$(CXX) $(CXXFLAGS) -c $(SRC)/functions.cpp -o $@
 
+run: $(EXE)
+	@echo
+	@read -p "  >> Ingresa el tamaño de la red (por ejemplo, 100): " N; \
+	read -p "  >> Ingresa la probabilidad de llenado p (por ejemplo, 0.5927): " P; \
+	echo; \
+	echo "  Ejecutando $(EXE) con parámetros: N=$$N  p=$$P"; \
+	./$(EXE) $$N $$P; \
+	echo; \
+	echo "  Ahora generando gráfica con simul.py..."; \
+	python3 graphics/simul.py lattice.txt cluster.pdf; \
+	echo; \
+	echo "  Listo: se creó 'lattice.txt' y 'cluster.pdf'."
 
 clean:
 	@echo "Cleaning /build"
-	rm -f $(OBJ)/*.o program.x
+	rm -f $(OBJ)/*.o *.x *.pdf *.txt
