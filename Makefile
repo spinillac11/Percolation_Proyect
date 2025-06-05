@@ -8,9 +8,9 @@ SANITIZERS = -fsanitize=address,leak,undefined
 SRC = src
 OBJ = build
 
-program.x: $(OBJ)/main.o $(OBJ)/functions.o $(OBJ)/UnionFind.o
+program.x: $(OBJ)/main.o $(OBJ)/functions.o 
 	@echo "Linking .o to create program.x"
-	$(CXX) $(CXXFLAGS) $(OBJ)/main.o $(OBJ)/functions.o $(OBJ)/UnionFind.o -o $@
+	$(CXX) $(CXXFLAGS) $(OBJ)/main.o $(OBJ)/functions.o -o $@
 
 
 $(OBJ)/main.o: $(SRC)/main.cpp
@@ -23,11 +23,7 @@ $(OBJ)/functions.o: $(SRC)/functions.cpp
 	@echo "Creating functions.o"
 	@mkdir -p $(OBJ)
 	$(CXX) $(CXXFLAGS) -c $(SRC)/functions.cpp -o $@
-	
-$(OBJ)/UnionFind.o: $(SRC)/UnionFind.cpp
-	@echo "Creating UnionFind.o"
-	@mkdir -p $(OBJ)
-	$(CXX) $(CXXFLAGS) -c $(SRC)/UnionFind.cpp -o $@
+
 
 clean:
 	@echo "Cleaning /build"
