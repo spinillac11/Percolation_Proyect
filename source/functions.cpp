@@ -95,7 +95,7 @@ Vec HoshenKopelman(Vec & lattice){
             }
             else
             {
-                lattice[idx] = Union(labels,label_up, label_left);
+                lattice[idx] = Union(labels, label_up, label_left);
             }
         }
     }
