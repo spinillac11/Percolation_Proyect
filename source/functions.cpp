@@ -1,5 +1,8 @@
 #include "declarations.h"
 
+/*
+Fill the laticce given the fill probability p
+*/
 void fill_laticce(Vec & lattice, double p)
 {
     int size = lattice.size();
@@ -15,6 +18,11 @@ void fill_laticce(Vec & lattice, double p)
     }
 }
 
+/*
+Save in a .txt the lattice
+0 = full
+1 = open
+*/
 void print(const Vec & lattice)
 {
     int L = sqrt(lattice.size());

@@ -26,7 +26,7 @@ int main(int argc, char **argv) {
     // Find clusters 
     cluster_size = find_clusters(Lattice); 
 
-    // Print Lattice with clusters
+    // Save Lattice with clusters
     print(Lattice); 
 
     // Print each cluster size
