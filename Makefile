@@ -4,6 +4,10 @@ INC = include
 SANITIZERS = -fsanitize=address,leak,undefined
 CXXFLAGS = -std=c++17 -Wall -g -I$(INC) $(SANITIZERS)
 
+# Latex report
+TEX=pdflatex
+SRC_TEX=main.tex
+OUT=out
 
 # Directories
 SRC = source
@@ -59,6 +63,13 @@ simul: $(EXE)
 test: test.x
 	./$< 
 
+report:
+	mkdir -p $(OUT)
+	$(TEX) -output-directory=$(OUT) $(SRC_TEX)
+	$(TEX) -output-directory=$(OUT) $(SRC_TEX)  # dos pasadas
+
 clean:
 	@echo "Cleaning /build"
 	rm -f $(OBJ)/*.o *.x *.pdf *.txt
+	@echo "Cleaning /$(OUT)"
+	rm -rf $(OUT)/*.aux $(OUT)/*.log $(OUT)/*.out $(OUT)/*.pdf
