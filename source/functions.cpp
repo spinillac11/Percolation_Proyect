@@ -4,7 +4,7 @@
 /*
 Fill the laticce given the fill probability p
 */
-void fill_laticce(Vec & lattice, double p)
+void fill_lattice(Vec & lattice, double p)
 {
     int size = lattice.size();
 
@@ -24,7 +24,7 @@ Save in a .txt the lattice
 0 = full
 1 = open
 */
-void print(const Vec & lattice)
+void print(const Vec & lattice, const std::string& filename)
 {
     int L = sqrt(lattice.size());
     // Open file
