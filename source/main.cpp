@@ -14,7 +14,7 @@ int main(int argc, char **argv) {
     // Fill Lattice 
     fill_lattice(Lattice, P);
 
-    // Print Lattice in console  
+    // Print Plain Lattice 
     print(Lattice, "lattice_plain.txt");
 
     // Find clusters 
@@ -23,18 +23,28 @@ int main(int argc, char **argv) {
     // Print Lattice with clusters
     print(Lattice, "lattice_clusters.txt"); 
 
-    // Print each cluster size
-    std::cout << "Cluster size:" << std::endl;
-    for (const auto & [cluster, size] : cluster_size) {
-        std::cout << cluster << "\t" << size << std::endl; 
-    }
-
+    // Find clusters that percolate
     Vec percol = detec_perc(Lattice);
 
-    std::cout << "The Clusters that percolate are:" << std::endl;
-    for (size_t i = 0; i < percol.size(); i++) {
-        std::cout << percol[i] << std::endl;
-    } 
+    // Print if percolates and max size
+    if (percol.size() == 1 && percol[0] == 0){
+        std::cout << 0 << "\t" << 0 << "\t" << 0 << std::endl;
+    }
+    else{
+        // Find biggest percolating cluster
+        int max_id = percol[0];
+        int max_size = cluster_size[max_id];
+
+        for(int id : percol){
+            int size = cluster_size[id];
+            if(size > max_size){
+                max_size = size; 
+                max_id = id;
+            }
+        }
+
+        std::cout << 1 << " " << max_id << " " << max_size << std::endl;
+    }
 
     return 0;
 }
