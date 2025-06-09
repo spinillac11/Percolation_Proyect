@@ -75,8 +75,8 @@ profile:
 	$(CXX) -I$(INC) $(CXXFLAGS_PROFILE) -o $(EXE_GPROF) $(SRC)/main.cpp $(SRC)/functions.cpp
 	@L=100
 	@p=0.5
-	@echo "Ejecutando programa para L = $(L), p = $(p)"
-	./$(EXE_GPROF) 10000 0.5 1>/dev/null
+	@echo "Ejecutando programa para L = $$(L), p = $$(p)"
+	./$(EXE_GPROF) $$(L) $$(p) 1>/dev/null
 	@echo "Procesando el reporte"
 	gprof $(EXE_GPROF) gmon.out > analysis.txt
 	@echo "Reporte plano generado adecuadamente"
