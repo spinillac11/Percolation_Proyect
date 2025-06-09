@@ -3,6 +3,7 @@ CXX = g++
 INC = include
 SANITIZERS = -fsanitize=address,leak,undefined
 CXXFLAGS = -std=c++17 -Wall -g -I$(INC) $(SANITIZERS)
+CXXFLAGS_PROFILE = -g -pg
 
 # Latex report
 TEX=pdflatex
@@ -13,8 +14,9 @@ OUT=out
 SRC = source
 OBJ = build
 
-# executable
+# executables
 EXE = program.x
+EXE_GPROF = program_gprof.x
 
 $(EXE): $(OBJ)/main.o $(OBJ)/functions.o 
 	@echo "Linking .o to create $(EXE)"
@@ -67,6 +69,17 @@ report:
 	mkdir -p $(OUT)
 	$(TEX) -output-directory=$(OUT) $(SRC_TEX)
 	$(TEX) -output-directory=$(OUT) $(SRC_TEX)  # dos pasadas
+
+profile:
+	@echo "Compilando con gprof"
+	$(CXX) -I$(INC) $(CXXFLAGS_PROFILE) -o $(EXE_GPROF) $(SRC)/main.cpp $(SRC)/functions.cpp
+	@L=100
+	@p=0.5
+	@echo "Ejecutando programa para L = $(L), p = $(p)"
+	./$(EXE_GPROF) 10000 0.5 1>/dev/null
+	@echo "Procesando el reporte"
+	gprof $(EXE_GPROF) gmon.out > analysis.txt
+	@echo "Reporte plano generado adecuadamente"
 
 clean:
 	@echo "Cleaning /build"
