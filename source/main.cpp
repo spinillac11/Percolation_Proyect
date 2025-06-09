@@ -15,19 +15,13 @@ int main(int argc, char **argv) {
     fill_lattice(Lattice, P);
 
     // Print Lattice in console  
-    for (int y = 0; y < L; ++y) {
-        for (int x = 0; x < L; ++x) {
-            std::cout << Lattice[y * L + x] << ' ';
-        }
-        std::cout << '\n';
-    } 
-    std::cout << '\n';
+    print(Lattice, "lattice_plain.txt");
 
     // Find clusters 
     cluster_size = find_clusters(Lattice); 
 
     // Print Lattice with clusters
-    print(Lattice); 
+    print(Lattice, "lattice_clusters.txt"); 
 
     // Print each cluster size
     std::cout << "Cluster size:" << std::endl;

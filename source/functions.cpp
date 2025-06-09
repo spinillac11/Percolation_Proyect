@@ -15,12 +15,13 @@ void fill_lattice(Vec & lattice, double p)
     }
 }
 
-void print(const Vec & lattice)
+void print(const Vec & lattice, const std::string& filename)
 {
     int L = sqrt(lattice.size());
     // Open file
     std::ofstream outfile;
-    outfile.open("lattice.txt");
+    outfile.open(filename);
+    if (!outfile) throw std::runtime_error("No se pudo abrir " + filename);
 
     for (int ii = 0; ii < L; ii++) 
     {
