@@ -1,6 +1,6 @@
 #include "declarations.h"
 
-void fill_laticce(Vec & lattice, double p)
+void fill_lattice(Vec & lattice, double p)
 {
     int size = lattice.size();
 
@@ -66,25 +66,24 @@ int Union(Vec & parent, int ii, int jj){
 */
 Vec HoshenKopelman(Vec & lattice){
     int L = sqrt(lattice.size());
-    Vec labels(int(L*L/2), 0);
+    Vec labels(1, 0);
     int next_label = 1;
     int label_left;
     int label_up;
 
-    for (int ii = 0; ii < L; ii++) 
-    {
-        for (int jj = 0; jj < L; jj++) 
-        {
+    for (int ii = 0; ii < L; ii++){
+        for (int jj = 0; jj < L; jj++){
+
             int idx = ii*L + jj; // Index
             
             if (lattice[idx] == 0) continue;
-
+            // Check if top or left side
             label_left = (jj > 0) ? lattice[idx - 1] : 0;
             label_up = (ii > 0) ? lattice[idx - L] : 0;
             
             if(label_left==0 && label_up==0){
                 // new cluster
-                labels[next_label] = next_label;
+                labels.push_back(next_label);
                 lattice[idx] = next_label++;
             }
             else if(label_left>0 && label_up==0){
@@ -114,7 +113,7 @@ Map find_clusters(Vec & lattice){
         }
     }
 
-    std::set<int> unique_ids(lattice.begin(), lattice.end());
+    std::set<int> unique_ids(labels.begin(), labels.end());
 
     Map sort;
     int next_id = 0;
@@ -164,7 +163,7 @@ Vec detec_perc(const Vec & lattice) {
     if (percolantes.empty()) return {0}; 
 
     // Convertir set a vector
-    return std::vector<int>(percolantes.begin(), percolantes.end());
+    return Vec(percolantes.begin(), percolantes.end());
 }
 
 

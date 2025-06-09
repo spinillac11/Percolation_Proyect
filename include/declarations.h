@@ -13,7 +13,7 @@ typedef std::vector<int> Vec;
 typedef std::map<int,int> Map;
 
 
-void fill_laticce(Vec & lattice, double p);
+void fill_lattice(Vec & lattice, double p);
 void print(const Vec & lattice);
 int Find(Vec & parent, int ii);
 int Union(Vec & parent, int ii, int jj);

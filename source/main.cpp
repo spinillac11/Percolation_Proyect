@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
     Map cluster_size;   
 
     // Fill Lattice 
-    fill_laticce(Lattice, P);
+    fill_lattice(Lattice, P);
 
     // Print Lattice in console  
     for (int y = 0; y < L; ++y) {
