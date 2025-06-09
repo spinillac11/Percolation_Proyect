@@ -59,6 +59,7 @@ simul: $(EXE)
 	@echo "==> Ejecutando simulación con N=4, p=0.6"
 	./$(EXE) 4 0.6
 	@echo "==> Generando 'cluster.pdf' desde 'lattice.txt'..."
+	@mkdir -p $(FIG)
 	python3 graphics/simul.py lattice.txt cluster.pdf
 	@echo "==> Listo: cluster.pdf creado."
 
