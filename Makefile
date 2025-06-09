@@ -8,6 +8,7 @@ CXXFLAGS = -std=c++17 -Wall -g -I$(INC) $(SANITIZERS)
 # Directories
 SRC = source
 OBJ = build
+FIG = figures
 
 # executable
 EXE = program.x
@@ -45,9 +46,10 @@ run: $(EXE)
 	./$(EXE) $$N $$P; \
 	echo; \
 	echo "  Ahora generando gráfica con simul.py..."; \
-	python3 graphics/simul.py lattice.txt cluster.pdf; \
+	mkdir -p $(FIG)
+	python3 graphics/simul.py; \
 	echo; \
-	echo "  Listo: se creó 'lattice.txt' y 'cluster.pdf'."
+	echo "  Listo: se creó 'figures/cluster.pdf'."
 
 simul: $(EXE)
 	@echo "==> Ejecutando simulación con N=4, p=0.6"
@@ -61,4 +63,4 @@ test: test.x
 
 clean:
 	@echo "Cleaning /build"
-	rm -f $(OBJ)/*.o *.x *.pdf *.txt
+	rm -f $(OBJ)/*.o *.x $(FIG)/*.pdf *.txt
