@@ -1,6 +1,10 @@
 #include "declarations.h"
 
-void fill_lattice(Vec & lattice, double p)
+
+/*
+Fill the laticce given the fill probability p
+*/
+void fill_laticce(Vec & lattice, double p)
 {
     int size = lattice.size();
 
@@ -15,7 +19,12 @@ void fill_lattice(Vec & lattice, double p)
     }
 }
 
-void print(const Vec & lattice, const std::string& filename)
+/*
+Save in a .txt the lattice
+0 = full
+1 = open
+*/
+void print(const Vec & lattice)
 {
     int L = sqrt(lattice.size());
     // Open file
@@ -37,7 +46,8 @@ void print(const Vec & lattice, const std::string& filename)
 /*
 * UnionFind algorithm implementation
 */
-int Find(Vec & parent, int ii){
+int Find(Vec & parent, int ii)
+{
     int jj = ii;
     int kk;
     while (parent[jj] != jj)
@@ -53,7 +63,8 @@ int Find(Vec & parent, int ii){
     return jj;
 }
 
-int Union(Vec & parent, int ii, int jj){
+int Union(Vec & parent, int ii, int jj)
+{
     int parent_ii = Find(parent, ii);
     int parent_jj = Find(parent, jj);
     int min = std::min(parent_ii, parent_jj);
@@ -65,7 +76,8 @@ int Union(Vec & parent, int ii, int jj){
 /*
 * Hoshen-Kopelman algorithm implementation
 */
-Vec HoshenKopelman(Vec & lattice){
+Vec HoshenKopelman(Vec & lattice)
+{
     int L = sqrt(lattice.size());
     Vec labels(1, 0);
     int next_label = 1;
@@ -103,7 +115,8 @@ Vec HoshenKopelman(Vec & lattice){
     return labels;
 }
 
-Map find_clusters(Vec & lattice){
+Map find_clusters(Vec & lattice)
+{
     Vec labels = HoshenKopelman(lattice);
     Map size;
 
