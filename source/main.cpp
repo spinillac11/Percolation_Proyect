@@ -28,7 +28,7 @@ int main(int argc, char **argv) {
 
     // Print if percolates and max size
     if (percol.size() == 1 && percol[0] == 0){
-        std::cout << 0 << "\t" << 0 << "\t" << 0 << std::endl;
+        std::cout << L << "\t" << P << "\t" << 0 << "\t" << 0 << "\t" << 0 << std::endl;
     }
     else{
         // Find biggest percolating cluster
@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
             }
         }
 
-        std::cout << 1 << "\t" << max_id << "\t" << max_size << std::endl;
+        std::cout << L << "\t" << P << "\t" << 1 << "\t" << max_id << "\t" << max_size << std::endl;
     }
 
     return 0;
