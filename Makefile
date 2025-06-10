@@ -11,6 +11,7 @@ OUT=out
 
 # Directories
 SRC = source
+GRP = graphics
 OBJ = build
 FIG = figures
 DAT = data
@@ -53,7 +54,7 @@ run: $(EXE)
 	echo; \
 	echo "  Ahora generando gráfica con simul.py..."; \
 	mkdir -p $(FIG)
-	python3 graphics/simul.py; \
+	python3 $(GRP)/simul.py; \
 	echo; \
 	echo "  Listo: se creó 'figures/cluster.pdf'."
 
@@ -61,6 +62,9 @@ analysis: $(EXE)
 	@echo "Ejecutando análisis de percolación"	
 	mkdir -p $(DAT)
 	bash $(SCP)/$@.sh
+	gnuplot $(GRP)/$@_prob.gp
+	gnuplot $(GRP)/$@_size.gp
+	@echo "Gráficas análisis creadas"
 
 
 simul: $(EXE)
