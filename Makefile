@@ -65,10 +65,17 @@ simul: $(EXE)
 test: test.x
 	./$< 
 
+
+debug: CXXFLAGS := -std=c++17 -Wall -ggdb -I$(INC)
+debug: $(EXE)
+	@echo "==> Ejecutando GDB sobre $(EXE)..."
+	gdb -ex "run 10 0.6" ./$(EXE)
+
 report:
 	mkdir -p $(OUT)
 	$(TEX) -output-directory=$(OUT) $(SRC_TEX)
 	$(TEX) -output-directory=$(OUT) $(SRC_TEX)  # dos pasadas
+
 
 clean:
 	@echo "Cleaning /build"
