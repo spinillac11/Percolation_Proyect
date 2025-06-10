@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
 
     // Print if percolates and max size
     if (percol.size() == 1 && percol[0] == 0){
-        std::cout << L << "\t" << P << "\t" << 0 << "\t" << 0 << "\t" << 0 << " ";
+        std::cout << L << "\t" << P << "\t" << 0 << "\t" << 0 << "\t" << 0 << "\t";
     }
     else{
         // Find biggest percolating cluster
@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
             }
         }
 
-        std::cout << L << "\t" << P << "\t" << 1 << "\t" << max_id << "\t" << max_size << " ";
+        std::cout << L << "\t" << P << "\t" << 1 << "\t" << max_id << "\t" << max_size << "\t";
     }
 
     //end chronometer
