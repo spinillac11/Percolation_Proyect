@@ -1,6 +1,8 @@
 #include "declarations.h"
 
 int main(int argc, char **argv) {
+    //start chrono
+    auto start = std::chrono::steady_clock::now();
     // read parameters
     const int L = std::atoi(argv[1]);
     const double P = std::atof(argv[2]); 
@@ -28,7 +30,7 @@ int main(int argc, char **argv) {
 
     // Print if percolates and max size
     if (percol.size() == 1 && percol[0] == 0){
-        std::cout << L << "\t" << P << "\t" << 0 << "\t" << 0 << "\t" << 0 << std::endl;
+        std::cout << L << "\t" << P << "\t" << 0 << "\t" << 0 << "\t" << 0 << " ";
     }
     else{
         // Find biggest percolating cluster
@@ -43,8 +45,14 @@ int main(int argc, char **argv) {
             }
         }
 
-        std::cout << L << "\t" << P << "\t" << 1 << "\t" << max_id << "\t" << max_size << std::endl;
+        std::cout << L << "\t" << P << "\t" << 1 << "\t" << max_id << "\t" << max_size << " ";
     }
+
+    //end chronometer
+    auto end = std::chrono::steady_clock::now();
+    //Calculate time
+    auto elapse = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+    std::cout << elapse << std::endl;
 
     return 0;
 }
