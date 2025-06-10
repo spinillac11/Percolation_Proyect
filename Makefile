@@ -13,6 +13,8 @@ OUT=out
 SRC = source
 OBJ = build
 FIG = figures
+DAT = data
+SCP = script
 
 # executable
 EXE = program.x
@@ -55,6 +57,12 @@ run: $(EXE)
 	echo; \
 	echo "  Listo: se creó 'figures/cluster.pdf'."
 
+analysis: $(EXE)
+	@echo "Ejecutando análisis de percolación"	
+	mkdir -p $(DAT)
+	bash $(SCP)/$@.sh
+
+
 simul: $(EXE)
 	@echo "==> Ejecutando simulación con N=4, p=0.6"
 	./$(EXE) 4 0.6
@@ -65,7 +73,6 @@ simul: $(EXE)
 
 test: test.x
 	./$< 
-
 
 debug: CXXFLAGS := -std=c++17 -Wall -ggdb -I$(INC)
 debug: $(EXE)
@@ -79,7 +86,11 @@ report:
 
 
 clean:
-	@echo "Cleaning /build"
-	rm -f $(OBJ)/*.o *.x *.pdf *.txt
+	@echo "Cleaning /$(OBJ)"
+	rm -f $(OBJ)/*.o *.txt
 	@echo "Cleaning /$(OUT)"
-	rm -rf $(OUT)/*.aux $(OUT)/*.log $(OUT)/*.out $(OUT)/*.pdf $(FIG)/*.pdf
+	rm -rf $(OUT)/*.aux $(OUT)/*.log $(OUT)/*.out $(OUT)/*.pdf $(FIG)/*.pdf 
+	@echo "Cleaning /$(DAT)"
+	rm -f $(DAT)/*.txt
+	@echo "Cleaning /$(FIG)"
+	rm -f $(FIG)/*.pdf
