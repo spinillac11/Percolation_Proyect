@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 
 # Cargar la matriz de clusters
-data = np.loadtxt('lattice.txt', dtype=int)
+data = np.loadtxt('lattice_clusters.txt', dtype=int)
 labels = np.unique(data)
 n_clusters = len(labels)
 
@@ -39,5 +39,5 @@ if rows <= 50:
 ax.set_xticks([])
 ax.set_yticks([])
 plt.tight_layout()
-plt.savefig('clusters.pdf', format='pdf')
+plt.savefig('figures/clusters.pdf', format='pdf')
 print("Figura guardada en clusters.pdf")

@@ -13,8 +13,8 @@ typedef std::vector<int> Vec;
 typedef std::map<int,int> Map;
 
 
-void fill_laticce(Vec & lattice, double p);
-void print(const Vec & lattice);
+void fill_lattice(Vec & lattice, double p);
+void print(const Vec & lattice, const std::string& filename);
 int Find(Vec & parent, int ii);
 int Union(Vec & parent, int ii, int jj);
 Vec HoshenKopelman(Vec & lattice);

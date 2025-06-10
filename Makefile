@@ -4,10 +4,15 @@ INC = include
 SANITIZERS = -fsanitize=address,leak,undefined
 CXXFLAGS = -std=c++17 -Wall -g -I$(INC) $(SANITIZERS)
 
+# Latex report
+TEX=pdflatex
+SRC_TEX=main.tex
+OUT=out
 
 # Directories
 SRC = source
 OBJ = build
+FIG = figures
 
 # executable
 EXE = program.x
@@ -45,9 +50,10 @@ run: $(EXE)
 	./$(EXE) $$N $$P; \
 	echo; \
 	echo "  Ahora generando gráfica con simul.py..."; \
-	python3 graphics/simul.py lattice.txt cluster.pdf; \
+	mkdir -p $(FIG)
+	python3 graphics/simul.py; \
 	echo; \
-	echo "  Listo: se creó 'lattice.txt' y 'cluster.pdf'."
+	echo "  Listo: se creó 'figures/cluster.pdf'."
 
 simul: $(EXE)
 	@echo "==> Ejecutando simulación con N=4, p=0.6"
@@ -59,11 +65,20 @@ simul: $(EXE)
 test: test.x
 	./$< 
 
+
 debug: CXXFLAGS := -std=c++17 -Wall -ggdb -I$(INC)
 debug: $(EXE)
 	@echo "==> Ejecutando GDB sobre $(EXE)..."
 	gdb -ex "run 10 0.6" ./$(EXE)
 
+report:
+	mkdir -p $(OUT)
+	$(TEX) -output-directory=$(OUT) $(SRC_TEX)
+	$(TEX) -output-directory=$(OUT) $(SRC_TEX)  # dos pasadas
+
+
 clean:
 	@echo "Cleaning /build"
 	rm -f $(OBJ)/*.o *.x *.pdf *.txt
+	@echo "Cleaning /$(OUT)"
+	rm -rf $(OUT)/*.aux $(OUT)/*.log $(OUT)/*.out $(OUT)/*.pdf $(FIG)/*.pdf
