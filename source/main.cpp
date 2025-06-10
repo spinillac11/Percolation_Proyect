@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
             }
         }
 
-        std::cout << 1 << " " << max_id << " " << max_size << std::endl;
+        std::cout << 1 << "\t" << max_id << "\t" << max_size << std::endl;
     }
 
     return 0;
