@@ -2,18 +2,18 @@ dir="../out_report"
 input_perf="out_report/report_perf.txt"
 output_perf="out_report/report_perf_filtered.txt"
 
-# Filtrar perf
+# Filter perf
 
-## Lista de funciones a procesar
+# List of functions to process
 functions=("fill_laticce" "print" "Find" "Union" "HoshenKopelman" "find_clusters" "detec_perc")
 
-## 1. Encabezado
+# Extract the headline. Importante >
 head -n 11 "$input_perf" > "$output_perf"
 
-## 2. Añadir la primera ocurrencia de cada función
+# Add the first ocurrence of each function
 for fname in "${functions[@]}"; do
     grep "$fname" "$input_perf" | head -n 1
-done | sort -k1,1nr >> "$output_perf"   # Ordenar por columna 1 numérica descendente
+done | sort -k1,1nr >> "$output_perf"   # Order by first collumn in numeric decending order
 
-# 3. fin
+# End
 echo -e "\n# --- Fin del reporte filtrado (perf) ---" >> "$output_perf"

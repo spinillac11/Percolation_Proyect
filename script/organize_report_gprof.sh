@@ -2,20 +2,20 @@ dir="../out_report"
 input_gprof="out_report/report_gprof.txt"
 output_gprof="out_report/report_gprof_filtered.txt"
 
-# Filtrar Gprof
+# Filter Gprof
 
-## Lista de funciones a procesar
+# List of functions to process
 functions=("fill_laticce" "print" "Find" "Union" "HoshenKopelman" "find_clusters" "detec_perc")
 
-## 1. Extraer encabezado. Importante >
+# Extract the headlien. Importante >
 head -n 5 "$input_gprof" > "$output_gprof"
 
-## 2. Añadir la primera ocurrencia de cada función (manteniendo orden en segundo acumulados)
+# Add the first ocurrence of each function (keeping the order in seconds acumulated)
 for fname in "${functions[@]}"; do
     grep "$fname" "$input_gprof" | head -n 1
 done | sort -k2,2n >> "$output_gprof"
 
-## 3. Añadir líneas manuales
+# Add the lines Manually
 manual_lines="
  %         the percentage of the total running time of the
 time       program used by this function.
@@ -60,10 +60,10 @@ index % time    self  children    called     name
 
 echo "$manual_lines" >> "$output_gprof"                                         
 
-## 4. Añadir las otras ocurrencias de cada función que NO son la primera
+# Add the other occurences of each function that ARE NOT the firstAñadir las otras ocurrencias de cada función que NO son la primera
 for fname in "${functions[@]}"; do
     grep "$fname" "$input_gprof" | tail -n +2 >> "$output_gprof"
 done
 
-## 5. Fin
+# End
 echo -e "\n# --- Fin del reporte filtrado ---" >> "$output_gprof"
