@@ -31,10 +31,10 @@ Ejecución con L = 4 Y P = 0.6:
 Testing (hacer "sapck load catch2" antes de ejecutar):
   make test
 
-Generar gráficas para el articulo y compilarlo:
+Generar TODOS los datos de cero para el articulo y compilarlo:
   make report
 
-Sólo compilar el articulo si ya están las gráficas y el reporte de gprof:
+Compila el articulo si ya están las gráficas y los reportes de profiling:
   make compile
 
 Compilación con banderas de debugging y ejecución de gdb:
