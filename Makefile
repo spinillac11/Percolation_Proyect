@@ -3,12 +3,9 @@ CXX = g++
 INC = include
 SANITIZERS = -fsanitize=address,leak,undefined
 CXXFLAGS = -std=c++17 -Wall -g -I$(INC) $(SANITIZERS)
-CXXFLAGS_PROFILE = -g -pg
+CXXFLAGS_GPROF = -g -pg
+CXXFLAGS_PERF = -fno-omit-frame-pointer
 
-# Latex report
-TEX=pdflatex
-SRC_TEX=main.tex
-OUT=out
 
 # Directories
 SRC = source
@@ -17,6 +14,8 @@ OBJ = build
 # executables
 EXE = program.x
 EXE_GPROF = program_gprof.x
+EXE_PERF = program_perf.x
+
 
 $(EXE): $(OBJ)/main.o $(OBJ)/functions.o 
 	@echo "Linking .o to create $(EXE)"
@@ -65,21 +64,46 @@ simul: $(EXE)
 test: test.x
 	./$< 
 
+# Latex report
+TEX=pdflatex
+SRC_TEX=main.tex
+OUT=out
+OUT_REPORT=out_report
 report:
 	mkdir -p $(OUT)
 	$(TEX) -output-directory=$(OUT) $(SRC_TEX)
 	$(TEX) -output-directory=$(OUT) $(SRC_TEX)  # dos pasadas
 
+# values
+L_PROF = 1000 
+P_PROF = 0.57
 profile:
-	@echo "Compilando con gprof"
-	$(CXX) -I$(INC) $(CXXFLAGS_PROFILE) -o $(EXE_GPROF) $(SRC)/main.cpp $(SRC)/functions.cpp
-	@L=100
-	@p=0.5
-	@echo "Ejecutando programa para L = $$(L), p = $$(p)"
-	./$(EXE_GPROF) $$(L) $$(p) 1>/dev/null
+	mkdir -p $(OUT)_report
+	@echo "Compilando para gprof"
+	$(CXX) -I$(INC) $(CXXFLAGS_GPROF) -o $(EXE_GPROF) $(SRC)/main.cpp $(SRC)/functions.cpp
+	@echo "Ejecutando programa con gprof"
+	echo "Ejecutando programa para L = $(L_PROF), p = $(P_PROF)"
+	./$(EXE_GPROF) $(L_PROF) $(P_PROF)  1>/dev/null 
 	@echo "Procesando el reporte"
-	gprof $(EXE_GPROF) gmon.out > analysis.txt
+	gprof $(EXE_GPROF) gmon.out > $(OUT_REPORT)/report_gprof.txt
 	@echo "Reporte plano generado adecuadamente"
+	@echo "Compilando para perf"
+	$(CXX) -I$(INC) $(CXXFLAGS_PERF) -o $(EXE_PERF) $(SRC)/main.cpp $(SRC)/functions.cpp
+	perf stat ./$(EXE_PERF) $(L_PROF) $(P_PROF) > $(OUT_REPORT)/profile_summary
+	@echo "Generando reporte con perf"
+	perf record ./$(EXE_PERF) $(L_PROF) $(P_PROF) >/dev/null
+	perf report > $(OUT_REPORT)/report_perf.txt
+	@echo "Reporte generadi exitosamente"
+	@echo "Generando flamegraph"
+	perf record --call-graph dwarf  -F 99 -g -- ./$(EXE_PERF) $(L_PROF) $(P_PROF) >/dev/null
+	perf script > $(OUT_REPORT)/out.perf
+	~/Downloads/FlameGraph/stackcollapse-perf.pl ./$(OUT_REPORT)/out.perf > $(OUT_REPORT)/out.folded
+	~/Downloads/FlameGraph/flamegraph.pl $(OUT_REPORT)/out.folded > figures/flamegraph.svg
+	rm -f *.out *.folded *.perf *.data *.old profile_summary *_gprof.x *_perf.x
+	@echo "Filtrar reportes *.txt con las funciones implementadas"
+	bash organize_report_gprof.sh
+	bash organize_report_perf.sh 
+
 
 clean:
 	@echo "Cleaning /build"
