@@ -62,9 +62,8 @@ analysis: $(EXE)
 	@echo "Ejecutando análisis de percolación"	
 	mkdir -p $(DAT)
 	bash $(SCP)/$@.sh
-	gnuplot $(GRP)/$@_prob.gp
-	gnuplot $(GRP)/$@_size.gp
-	@echo "Gráficas análisis creadas"
+	python3 $(GRP)/$@.py
+	@echo "Gráficas de análisis creadas"
 
 
 simul: $(EXE)
