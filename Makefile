@@ -88,14 +88,21 @@ debug: $(EXE)
 	gdb -ex "run 10 0.6" ./$(EXE)
 
 report:
+	make simul
+	make optimization
+	make analysis
 	mkdir -p $(OUT)
 	$(TEX) -output-directory=$(OUT) $(SRC_TEX)
 	$(TEX) -output-directory=$(OUT) $(SRC_TEX)  # dos pasadas
 
-
+temporal:
+	mkdir -p $(OUT)
+	$(TEX) -output-directory=$(OUT) $(SRC_TEX)
+	$(TEX) -output-directory=$(OUT) $(SRC_TEX)  # dos pasadas
+	
 clean:
 	@echo "Cleaning /$(OBJ)"
-	rm -f $(OBJ)/*.o *.txt
+	rm -f $(OBJ)/*.o *.txt *.x
 	@echo "Cleaning /$(OUT)"
 	rm -rf $(OUT)/*.aux $(OUT)/*.log $(OUT)/*.out $(OUT)/*.pdf $(FIG)/*.pdf 
 	@echo "Cleaning /$(DAT)"
