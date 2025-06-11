@@ -34,7 +34,7 @@ Testing (hacer "sapck load catch2" antes de ejecutar):
 Generar gráficas para el articulo y compilarlo:
   make report
 
-Sólo compilar el articulo si ya están las gráficas:
+Sólo compilar el articulo si ya están las gráficas y el reporte de gprof:
   make compile
 
 Compilación con banderas de debugging y ejecución de gdb:
