@@ -29,7 +29,7 @@ for i, L in enumerate(sizes):
     ax.grid(True)
 
 fig1.tight_layout()
-fig1.savefig("figures/Perc_prob_grid.pdf")
+fig1.savefig("figures/Perc_prob.pdf")
 
 # --------- Figura 2: Tamaño normalizado del cluster más grande ---------
 fig2, axs2 = plt.subplots(2, 3, figsize=(12, 8), sharex=False, sharey=False)
@@ -55,5 +55,5 @@ for i, L in enumerate(sizes):
     ax.grid(True)
 
 fig2.tight_layout()
-fig2.savefig("figures/Size_grid.pdf")
+fig2.savefig("figures/Size.pdf")
 
