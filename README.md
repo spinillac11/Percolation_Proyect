@@ -6,28 +6,45 @@ Este proyecto implementa un simulador de percolación por sitios en una red cuad
 
 ## Tabla de contenidos
 
-- [Requisitos](#requisitos)  
-- [Estructura de directorios](#estructura-de-directorios)  
-- [Instrucciones de compilación y uso](#instrucciones-de-compilación-y-uso)  
-- [Makefile: Targets principales](#makefile-targets-principales)  
-- [Archivos fuente](#archivos-fuente)  
-- [Testing con Catch2](#testing-con-catch2)  
-- [Profiling y optimización](#profiling-y-optimización)  
-- [Generación de informe LaTeX](#generación-de-informe-latex)  
-- [Limpieza (clean)](#limpieza-clean)  
-- [Licencia](#licencia)  
+- [Ejecución: Targets principales](#ejecucion-targets-principales)
+- [Estructura de directorios](#estructura-de-directorios)    
 
 ---
 
-## Requisitos
+## Ejecución
 
-- **Compilador C++** con soporte C++17 (e.g., `g++`)  
-- **Make**  
-- **Catch2** para tests unitarios  
-- **Python 3** con bibliotecas necesarias para scripts de graficado (`matplotlib`, `numpy`, etc.)  
-- **LaTeX** (`pdflatex`) para compilar el informe  
-- **Herramientas de profiling**: `gprof`, `perf`, `FlameGraph` (stackcollapse-perf.pl, flamegraph.pl), `rsvg-convert` o similar para SVG→PDF  
-- Opcional: `valgrind` para análisis de memoria  
+Ejecutable (program.x): 
+  make
+
+Ejecución de la simulación con valores de L y p dados por el usuario:
+  make run
+
+Obtención datos y graficas para análisis de percolación: 
+  make analysis
+
+Obtención datos y gráfica para análisis de niveles de optimización:
+  make optimization
+
+Ejecución con L = 4 Y P = 0.6:
+  make simul
+
+Testing:
+  make test
+
+Artículo compilado con main.tex:
+  make report
+
+Compilación con banderas de debugging y ejecución de gdb:
+  make debug
+
+Reporte profiling:
+ make profile
+
+Valgrind con banderas de debugging con L = 6 y p = 0.6:
+  make valgrind
+
+Limpiar
+  make clean
 
 ---
 
@@ -37,18 +54,25 @@ Este proyecto implementa un simulador de percolación por sitios en una red cuad
 .
 ├── Makefile
 ├── include/                # Archivos de cabecera (.hpp/.h)
-│   └── ... 
+│   └── include.h           # Declaración de funciones
 ├── source/                 # Código fuente en C++
-│   ├── main.cpp
-│   ├── functions.cpp
-│   └── test.cpp
+│   ├── main.cpp              
+│   ├── functions.cpp       # Implementación de funciones
+│   └── test.cpp            # Implementación de funciones
 ├── build/                  # Archivos objeto (.o) generados
 ├── figures/                # Figuras generadas (PDF, SVG, etc.)
-├── data/                   # Datos de entrada/salida para análisis
+├── data/                   # Datos de salida para análisis de percolación
 ├── graphics/               # Scripts Python para graficar (simul.py, plot_opti.py, analysis.py, etc.)
-├── script/                 # Scripts bash (e.g., analysis.sh, organize_report_gprof.sh, ...)
-├── out/                    # Salida de compilación LaTeX (PDF, aux, log, etc.)
-├── out_report/             # Reportes de profiling (gprof, perf) y logs
+│   ├── analysis.py         # Gráficas análisis de percolación              
+│   ├── plot_opti.py        # Gráficas análisis de niveles de optimización
+│   └── simul.py            # Graficas de red de clusters 
+├── script/                 # Scripts bash 
+    ├── analysis.sh         # Datos análisis de percolación   
+    ├── optimization.sh     # Datos de niveles de optimización
+    ├── organize_report_perf.sh # Filtrar reporte de perf
+    └── organize_report_gprof.sh # Filtrar reporte de gprof                
+├── out/                    # Salida de compilación LaTeX ==> PDF del articulo
+├── out_report/             # Reportes de profiling (gprof, perf)
 └── main.tex                # Fuente principal del informe en LaTeX
 
 
