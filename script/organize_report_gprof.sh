@@ -1,4 +1,4 @@
-dir="out_report"
+dir="../out_report"
 input_gprof="$dir/report_gprof.txt"
 output_gprof="$dir/report_gprof_filtered.txt"
 

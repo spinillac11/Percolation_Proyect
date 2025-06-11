@@ -1,4 +1,4 @@
-dir="out_report"
+dir="../out_report"
 input_perf="$dir/report_perf.txt"
 output_perf="$dir/report_perf_filtered.txt"
 

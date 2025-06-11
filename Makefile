@@ -140,8 +140,8 @@ profile:
 	~/Downloads/FlameGraph/flamegraph.pl $(OUT_REPORT)/out.folded > figures/flamegraph.svg
 	rm -f *.out *.folded *.perf *.data *.old profile_summary *_gprof.x *_perf.x
 	@echo "Filtrar reportes *.txt con las funciones implementadas"
-	bash organize_report_gprof.sh
-	bash organize_report_perf.sh 	
+	bash $(SCP)/organize_report_gprof.sh
+	bash $(SCP)/organize_report_perf.sh 	
 	
 clean:
 	@echo "Cleaning /$(OBJ)"
