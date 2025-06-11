@@ -83,9 +83,22 @@ test: test.x
 	./$< 
 
 debug: CXXFLAGS := -std=c++17 -Wall -ggdb -I$(INC)
-debug: $(EXE)
+debug: clean_obj $(EXE)
 	@echo "==> Ejecutando GDB sobre $(EXE)..."
-	gdb -ex "run 10 0.6" ./$(EXE)
+	gdb -ex "file $(EXE)"
+
+# Limpia solo los archivos .o
+clean_obj:
+	@echo "Limpiando objetos anteriores..."
+	rm -f $(OBJ)/*.o
+
+
+valgrind: CXXFLAGS := -std=c++17 -Wall -g -I$(INC)
+valgrind: clean_obj $(EXE)
+	@echo "==> Ejecutando Valgrind sobre $(EXE) con N=6 y P=0.6..."
+	valgrind --tool=memcheck --leak-check=yes ./$(EXE) 6 0.6 > valgrind_log.txt 2>&1 || true
+	@echo "==> Log de Valgrind guardado en 'valgrind_log.txt'."
+
 
 report:
 	mkdir -p $(OUT)
