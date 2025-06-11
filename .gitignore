@@ -16,3 +16,5 @@ a.out
 out/
 .out
 out_report/
+build/
+data/
