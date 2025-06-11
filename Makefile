@@ -157,3 +157,5 @@ clean:
 	rm -f $(DAT)/*.txt
 	@echo "Cleaning /$(FIG)"
 	rm -f $(FIG)/*.pdf
+	@echo "Cleaning /$(OUT_REPORT)"
+	rm -r $(OUT_REPORT)/*
