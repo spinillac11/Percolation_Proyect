@@ -146,6 +146,7 @@ Map find_clusters(Vec & lattice)
 
 Vec detec_perc(const Vec & lattice) {
 
+    //Get the tags present in each border of the lattice
     int L = sqrt(lattice.size());
     std::set<int> top_row, bottom_row, left_col, right_col, percolantes;
  
@@ -161,7 +162,7 @@ Vec detec_perc(const Vec & lattice) {
         if (lattice[y * L + (L - 1)] > 0)    right_col.insert(lattice[y * L + (L - 1)]);
     }
 
-    // Comparar etiquetas comunes entre bordes
+    // Comparate the tags in common between the borders
     for (int label : top_row) {
         if (bottom_row.count(label)) {
             percolantes.insert(label);
@@ -173,10 +174,10 @@ Vec detec_perc(const Vec & lattice) {
         }
     }
 
-    // Si no hay percolantes, retornar {0}
+    // If there are not precolating clusters return {0}
     if (percolantes.empty()) return {0}; 
 
-    // Convertir set a vector
+    // Convert into a vector
     return Vec(percolantes.begin(), percolantes.end());
 }
 

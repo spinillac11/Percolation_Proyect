@@ -53,6 +53,7 @@ int main(int argc, char **argv) {
     //Calculate time
     auto elapse = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
     std::cout << elapse << std::endl;
-
+    // Out format as follow: 
+    //Size of lattice, Probability of filling, 1 or 0 if percollation its present, id of the biggest percollating cluster, size of the biggest percollating cluser, Time of simulation
     return 0;
 }
