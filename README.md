@@ -31,8 +31,11 @@ Ejecución con L = 4 Y P = 0.6:
 Testing (hacer "sapck load catch2" antes de ejecutar):
   make test
 
-Artículo compilado con main.tex:
+Generar gráficas para el articulo y compilarlo:
   make report
+
+Sólo compilar el articulo si ya están las gráficas:
+  make compile
 
 Compilación con banderas de debugging y ejecución de gdb:
   make debug
