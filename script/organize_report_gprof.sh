@@ -1,6 +1,6 @@
 dir="../out_report"
-input_gprof="$dir/report_gprof.txt"
-output_gprof="$dir/report_gprof_filtered.txt"
+input_gprof="out_report/report_gprof.txt"
+output_gprof="out_report/report_gprof_filtered.txt"
 
 # Filtrar Gprof
 

@@ -1,6 +1,6 @@
 dir="../out_report"
-input_perf="$dir/report_perf.txt"
-output_perf="$dir/report_perf_filtered.txt"
+input_perf="out_report/report_perf.txt"
+output_perf="out_report/report_perf_filtered.txt"
 
 # Filtrar perf
 

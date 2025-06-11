@@ -3,11 +3,14 @@ CXX = g++
 INC = include
 SANITIZERS = -fsanitize=address,leak,undefined
 CXXFLAGS = -std=c++17 -Wall -g -I$(INC) $(SANITIZERS)
+CXXFLAGS_GPROF = -g -pg
+CXXFLAGS_PERF = -fno-omit-frame-pointer
 
 # Latex report
 TEX=pdflatex
 SRC_TEX=main.tex
 OUT=out
+OUT_REPORT=out_report
 
 # Directories
 SRC = source
@@ -19,6 +22,8 @@ SCP = script
 
 # executable
 EXE = program.x
+EXE_GPROF = program_gprof.x
+EXE_PERF = program_perf.x
 
 $(EXE): $(OBJ)/main.o $(OBJ)/functions.o 
 	@echo "Linking .o to create $(EXE)"
@@ -137,7 +142,7 @@ profile:
 	perf record --call-graph dwarf  -F 99 -g -- ./$(EXE_PERF) $(L_PROF) $(P_PROF) >/dev/null
 	perf script > $(OUT_REPORT)/out.perf
 	~/Downloads/FlameGraph/stackcollapse-perf.pl ./$(OUT_REPORT)/out.perf > $(OUT_REPORT)/out.folded
-	~/Downloads/FlameGraph/flamegraph.pl $(OUT_REPORT)/out.folded > figures/flamegraph.svg
+	~/Downloads/FlameGraph/flamegraph.pl $(OUT_REPORT)/out.folded > $(FIG)/flamegraph.svg
 	rm -f *.out *.folded *.perf *.data *.old profile_summary *_gprof.x *_perf.x
 	@echo "Filtrar reportes *.txt con las funciones implementadas"
 	bash $(SCP)/organize_report_gprof.sh
