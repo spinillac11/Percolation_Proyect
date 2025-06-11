@@ -110,7 +110,7 @@ report: simul optimization analysis profile
 	$(TEX) -output-directory=$(OUT) $(SRC_TEX)
 	$(TEX) -output-directory=$(OUT) $(SRC_TEX)  # dos pasadas
 
-temporal:
+compile:
 	mkdir -p $(OUT)
 	$(TEX) -output-directory=$(OUT) $(SRC_TEX)
 	$(TEX) -output-directory=$(OUT) $(SRC_TEX)  # dos pasadas
