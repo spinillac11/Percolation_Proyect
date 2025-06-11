@@ -62,6 +62,13 @@ analysis: $(EXE)
 	mkdir -p $(DAT)
 	bash $(SCP)/$@.sh
 
+optimization: $(SRC)/main.cpp $(SRC)/functions.cpp
+	@echo "Ejecutando comparación de niveles de optimización"
+	@mkdir -p $(DAT)
+	bash $(SCP)/$@.sh
+	python3 graphics/plot_opti.py 
+
+
 
 simul: $(EXE)
 	@echo "==> Ejecutando simulación con N=4, p=0.6"
