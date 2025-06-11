@@ -26,14 +26,13 @@ La percolación es un fenómeno físico y matemático que describe el comportami
 
 Para el reconocimiento eficiente de estos clusters se implementó el algoritmo de Hoshen-Kopelman, que permite etiquetar de manera rápida y sin redundancias los distintos conglomerados conectados de la matriz. Con esta información es posible determinar si existe un cluster que conecta los bordes opuestos de la red, es decir, si el sistema \emph{percola}.
 
-En la figura \ref{fig:lattice_clusters} se ilustran dos representaciones de una red: una antes de identificar los clusters en donde los sitios ocupados se representan con 1 y otra después de aplicar el algoritmo de Hoshen-Kopelman, donde cada cluster ha sido etiquetado y representado con un color diferente.
-
+En la figura \ref{fig:lattice_clusters} se ilustran dos representaciones de una red: una antes de identificar los clusters en donde los sitios ocupados se representan con 1 y otra después de aplicar el algoritmo de Hoshen-Kopelman, donde cada cluster ha sido etiquetado y representado con un color diferente. Re realiza la simulación con los parametros \( L = 4\) y \( p = 0.6\) (target simul).
 \begin{figure}[ht]
     \centering
     \includegraphics[width=0.45\textwidth]{figures/lattice.pdf}
     \hfill
     \includegraphics[width=0.45\textwidth]{figures/clusters.pdf}
-    \caption{(Izquierda) Lattice de tamaño \( L \times L \) con ocupación aleatoria según probabilidad \( p \). (Derecha) Identificación de clusters mediante el algoritmo de Hoshen-Kopelman.}
+    \caption{(Izquierda) Lattice de tamaño \( L \times L = 16\) con ocupación aleatoria según probabilidad \( p = 0.6\). (Derecha) Identificación de clusters mediante el algoritmo de Hoshen-Kopelman.}
     \label{fig:lattice_clusters}
 \end{figure}
 En el límite termodinámico (\(L \to \infty\)), se define una probabilidad crítica \(p_{c}\). Por debajo de este umbral (\(p < p_{c}\)), no existe clúster percolante de tamaño macroscópico, mientras que para \(p \ge p_{c}\) aparece con probabilidad uno un clúster de tamaño infinito que conecta la red.
