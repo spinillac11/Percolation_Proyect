@@ -105,10 +105,7 @@ valgrind: clean_obj $(EXE)
 	@echo "==> Log de Valgrind guardado en 'valgrind_log.txt'."
 
 
-report:
-	make simul
-	make optimization
-	make analysis
+report: simul optimization analysis profile
 	mkdir -p $(OUT)
 	$(TEX) -output-directory=$(OUT) $(SRC_TEX)
 	$(TEX) -output-directory=$(OUT) $(SRC_TEX)  # dos pasadas
@@ -120,7 +117,7 @@ temporal:
 
 # values
 L_PROF = 1000 
-P_PROF = 0.57
+P_PROF = 0.6
 profile:
 	mkdir -p $(OUT)_report
 	@echo "Compilando para gprof"
@@ -144,6 +141,8 @@ profile:
 	~/Downloads/FlameGraph/stackcollapse-perf.pl ./$(OUT_REPORT)/out.perf > $(OUT_REPORT)/out.folded
 	~/Downloads/FlameGraph/flamegraph.pl $(OUT_REPORT)/out.folded > $(FIG)/flamegraph.svg
 	rm -f *.out *.folded *.perf *.data *.old profile_summary *_gprof.x *_perf.x
+	@echo "Convertir flamegraph.svg ==> flamegraph.pdf"
+	rsvg-convert -f pdf -o $(FIG)/flamegraph.pdf $(FIG)/flamegraph.svg
 	@echo "Filtrar reportes *.txt con las funciones implementadas"
 	bash $(SCP)/organize_report_gprof.sh
 	bash $(SCP)/organize_report_perf.sh 	
@@ -152,10 +151,10 @@ clean:
 	@echo "Cleaning /$(OBJ)"
 	rm -f $(OBJ)/*.o *.txt *.x
 	@echo "Cleaning /$(OUT)"
-	rm -rf $(OUT)/*.aux $(OUT)/*.log $(OUT)/*.out $(OUT)/*.pdf $(FIG)/*.pdf 
+	rm -rf $(OUT)/*.aux $(OUT)/*.log $(OUT)/*.out $(OUT)/*.pdf 
 	@echo "Cleaning /$(DAT)"
 	rm -f $(DAT)/*.txt
 	@echo "Cleaning /$(FIG)"
-	rm -f $(FIG)/*.pdf
+	rm -f $(FIG)/*
 	@echo "Cleaning /$(OUT_REPORT)"
 	rm -r $(OUT_REPORT)/*
