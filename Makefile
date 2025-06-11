@@ -82,7 +82,7 @@ simul: $(EXE)
 	@echo "==> Generando 'cluster.pdf' desde 'lattice.txt'..."
 	@mkdir -p $(FIG)
 	python3 graphics/simul.py lattice.txt cluster.pdf
-	@echo "==> Listo: cluster.pdf creado."
+	@echo "==> cluster.pdf y lattice.pdf creados."
 
 test: test.x
 	./$< 
