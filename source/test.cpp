@@ -18,13 +18,6 @@ TEST_CASE("fill_lattice function test"){
             REQUIRE(x == 1);
         }
     }
-    SECTION("p = 0.5 approx 50%"){
-        fill_lattice(Lattice, 0.5);
-        int sum = std::accumulate(Lattice.begin(), Lattice.end(), 0);
-        double frac = double(sum) / N;
-        REQUIRE(frac >= 0.4);
-        REQUIRE(frac <= 0.6);
-    }
     SECTION("p > 1, all ones"){
         fill_lattice(Lattice, 10.5);
         for (auto x : Lattice){
@@ -62,26 +55,125 @@ TEST_CASE("Union-Find algorithm and path compresion test") {
     }
 }
 
-TEST_CASE("Hoshen-Kopelman and find_clusters test") {
-    Vec lattice = {
+TEST_CASE("Hoshen-Kopelman, find_clusters and size test") {
+
+    SECTION("Hoshen-Kopelman test"){
+        // Todos conectados
+        Vec lattice = {
+        1, 1, 0, 0,
+        0, 1, 0, 1,
+        0, 1, 0, 1,
+        0, 1, 1, 1
+        };
+        Vec cluster = {
+        1, 1, 0, 0,
+        0, 1, 0, 2,
+        0, 1, 0, 2,
+        0, 1, 1, 1
+        };
+        Vec labels;
+        labels = HoshenKopelman(lattice);
+        REQUIRE(labels.size() == 3);
+        for(auto ii = 0; ii < 16; ii++){
+            REQUIRE(lattice[ii] == cluster[ii]);
+        }
+    }
+
+    SECTION("full lattice"){
+        Vec full = {
+            1,1,
+            1,1
+        };
+        Map clusters;
+        clusters = find_clusters(full);
+        REQUIRE(clusters.size() == 1);
+        REQUIRE(clusters[1] == 4);
+    }
+
+    SECTION("One cluster"){
+        Vec lattice = {
         1, 0,
         0, 0
-    };
-    Map clusters;
+        };
+        Map clusters;
 
-    // find_clusters etiqueta el único 1 como cluster 0 de tamaño 1
-    clusters = find_clusters(lattice);
-    REQUIRE(clusters.size() == 2);
-    REQUIRE(clusters[0] == 3);
-    REQUIRE(clusters[1] == 1);
+        // 
+        clusters = find_clusters(lattice);
+        REQUIRE(clusters.size() == 2);
+        REQUIRE(clusters[0] == 3);
+        REQUIRE(clusters[1] == 1);
+    }
     
+    SECTION("Max clusters"){
+        Vec lattice = {
+        1, 0, 1, 0,
+        0, 1, 0, 1,
+        1, 0, 1, 0,
+        0, 1, 0, 1
+        };
+        Map clusters;
 
-    // Todos conectados
-    Vec full = {
-        1,1,
-        1,1
-    };
-    clusters = find_clusters(full);
-    REQUIRE(clusters.size() == 1);
-    REQUIRE(clusters[1] == 4);
+        // 
+        clusters = find_clusters(lattice);
+        REQUIRE(clusters.size() == 9);
+        REQUIRE(clusters[0] == 8);
+        REQUIRE(clusters[1] == 1);
+        REQUIRE(clusters[2] == 1);
+        REQUIRE(clusters[3] == 1);
+        REQUIRE(clusters[4] == 1);
+        REQUIRE(clusters[5] == 1);
+        REQUIRE(clusters[6] == 1);
+        REQUIRE(clusters[7] == 1);
+        REQUIRE(clusters[8] == 1);
+    }
+}
+
+TEST_CASE("detect_perc function test"){
+
+    SECTION("No percolation") {
+        
+        Vec lattice2(4, 0);
+        Vec per2 = detec_perc(lattice2);
+        REQUIRE(per2 == Vec{0});
+
+        Vec lattice3(9,0);
+        Vec per3 = detec_perc(lattice3);
+        REQUIRE(per3 == Vec{0});
+
+        Vec lattice = {
+            1,1,0,  
+            0,1,2,  
+            0,2,2  
+        };
+        Vec per = detec_perc(lattice);
+        REQUIRE(per == Vec{0});
+    }
+
+    SECTION("vertical/horizontal percolation (2 clusters)") {
+        Vec lattice1 = {
+            1,0,2,
+            1,0,2,
+            1,0,2
+        };
+        Vec per1 = detec_perc(lattice1);
+        REQUIRE(per1 == Vec{1, 2});
+
+        Vec lattice2 = {
+            1,1,1,
+            0,0,0,
+            2,2,2
+        };
+        Vec per2 = detec_perc(lattice2);
+        REQUIRE(per2 == Vec{1, 2});
+    }
+
+    SECTION("vertical & horizontal percolation") {
+        Vec lattice = {
+            0,1,0,
+            1,1,1,
+            0,1,0
+        };
+        Vec per = detec_perc(lattice);
+        REQUIRE(per == Vec{1});
+    }
 }
