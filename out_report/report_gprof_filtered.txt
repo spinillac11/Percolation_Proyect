@@ -3,12 +3,12 @@ Flat profile:
 Each sample counts as 0.01 seconds.
   %   cumulative   self              self     total           
  time   seconds   seconds    calls  ms/call  ms/call  name    
-  4.17      0.38     0.02        1    20.00   365.24  find_clusters(std::vector<int, std::allocator<int> >&)
-  0.00      0.48     0.00        1     0.00     0.07  detec_perc(std::vector<int, std::allocator<int> > const&)
-  0.00      0.48     0.00        1     0.00    22.98  HoshenKopelman(std::vector<int, std::allocator<int> >&)
-  0.00      0.48     0.00        2     0.00     4.98  print(std::vector<int, std::allocator<int> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
-  0.00      0.48     0.00   214776     0.00     0.00  Union(std::vector<int, std::allocator<int> >&, int, int)
-  0.00      0.48     0.00  1029117     0.00     0.00  Find(std::vector<int, std::allocator<int> >&, int)
+  9.68      0.18     0.03        1    30.00    30.00  HoshenKopelman(std::vector<int, std::allocator<int> >&)
+  0.00      0.31     0.00        1     0.00     0.04  detec_perc(std::vector<int, std::allocator<int> > const&)
+  0.00      0.31     0.00        2     0.00     0.00  print(std::vector<int, std::allocator<int> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&)
+  0.00      0.31     0.00   215830     0.00     0.00  Union(std::vector<int, std::allocator<int> >&, int, int)
+  0.00      0.31     0.00  1031988     0.00     0.00  Find(std::vector<int, std::allocator<int> >&, int)
+  3.23      0.31     0.01        1    10.00   219.99  find_clusters(std::vector<int, std::allocator<int> >&)
 
  %         the percentage of the total running time of the
 time       program used by this function.
@@ -51,10 +51,10 @@ granularity: each sample hit covers 2 byte(s) for 1.72% of 0.58 seconds
 index % time    self  children    called     name
                                                  <spontaneous>
 	   the gprof listing if it were to be printed.
-                0.00    0.01       2/2           print(std::vector<int, std::allocator<int> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [37]
-                0.01    0.00 2000000/2006447     print(std::vector<int, std::allocator<int> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [37]
-[37]     2.1    0.00    0.01       2         print(std::vector<int, std::allocator<int> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [37]
-                0.00    0.00       2/74          print(std::vector<int, std::allocator<int> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [37]
+                0.00    0.00       2/2           print(std::vector<int, std::allocator<int> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [235]
+                0.00    0.00 2000000/2006391     print(std::vector<int, std::allocator<int> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [235]
+                0.00    0.00       2/74          print(std::vector<int, std::allocator<int> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [235]
+[235]    0.0    0.00    0.00       2         print(std::vector<int, std::allocator<int> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [235]
 		The index number is printed next to every function name so
 		printed after it.  If the function is a member of a
 		cycle, the cycle number is printed between the
@@ -63,41 +63,40 @@ index % time    self  children    called     name
  `<spontaneous>' is printed in the `name' field, and all the other
 		number is printed after it.  If the child is a
 		member of a cycle, the cycle number is printed
-  [37] print(std::vector<int, std::allocator<int> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [208] std::_Rb_tree_key_compare<std::less<int> >::_Rb_tree_key_compare() [150] std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_put_node(std::_Rb_tree_node<int>*)
-                0.00    0.01  599565/1029117     Find(std::vector<int, std::allocator<int> >&, int) [19]
-                0.02    0.00 4504334/8516570     Find(std::vector<int, std::allocator<int> >&, int) [19]
-[19]     4.4    0.00    0.02 1029117         Find(std::vector<int, std::allocator<int> >&, int) [19]
-                0.00    0.01  429552/1029117     Find(std::vector<int, std::allocator<int> >&, int) [19]
-  [19] Find(std::vector<int, std::allocator<int> >&, int) [96] std::_Rb_tree_iterator<int>::_Rb_tree_iterator(std::_Rb_tree_node_base*) [175] std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node::_Alloc_node(std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >&)
-                0.00    0.00  214776/8516570     Union(std::vector<int, std::allocator<int> >&, int, int) [38]
-                0.00    0.01  214776/214776      Union(std::vector<int, std::allocator<int> >&, int, int) [38]
-                0.00    0.01  429552/1029117     Union(std::vector<int, std::allocator<int> >&, int, int) [38]
-[38]     2.0    0.00    0.01  214776         Union(std::vector<int, std::allocator<int> >&, int, int) [38]
-                0.00    0.00  214776/214776      Union(std::vector<int, std::allocator<int> >&, int, int) [38]
-                0.00    0.00  214776/214776      Union(std::vector<int, std::allocator<int> >&, int, int) [38]
-  [38] Union(std::vector<int, std::allocator<int> >&, int, int) [158] std::_Rb_tree_iterator<int>::operator--() [149] std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_get_node()
-                0.00    0.02       1/1           HoshenKopelman(std::vector<int, std::allocator<int> >&) [18]
-                0.01    0.00 2797458/8516570     HoshenKopelman(std::vector<int, std::allocator<int> >&) [18]
-[18]     4.8    0.00    0.02       1         HoshenKopelman(std::vector<int, std::allocator<int> >&) [18]
-                0.00    0.01  214776/214776      HoshenKopelman(std::vector<int, std::allocator<int> >&) [18]
-                0.00    0.00   96537/96537       HoshenKopelman(std::vector<int, std::allocator<int> >&) [18]
-                0.00    0.00       1/74          HoshenKopelman(std::vector<int, std::allocator<int> >&) [18]
-                0.00    0.00       1/9           HoshenKopelman(std::vector<int, std::allocator<int> >&) [18]
-                0.00    0.00       1/2           HoshenKopelman(std::vector<int, std::allocator<int> >&) [18]
-  [18] HoshenKopelman(std::vector<int, std::allocator<int> >&) [70] std::_Rb_tree_iterator<std::pair<int const, int> >::_Rb_tree_iterator(std::_Rb_tree_node_base*) [25] std::_Rb_tree_iterator<int> std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_insert_<int&, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node>(std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, int&, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node&)
-                0.02    0.35       1/1           find_clusters(std::vector<int, std::allocator<int> >&) [2]
-[2]     76.1    0.02    0.35       1         find_clusters(std::vector<int, std::allocator<int> >&) [2]
-                0.00    0.29 2025682/2025684     find_clusters(std::vector<int, std::allocator<int> >&) [2]
-                0.00    0.02       1/1           find_clusters(std::vector<int, std::allocator<int> >&) [2]
-                0.00    0.01  599565/1029117     find_clusters(std::vector<int, std::allocator<int> >&) [2]
-                0.00    0.01       1/1           find_clusters(std::vector<int, std::allocator<int> >&) [2]
-                0.01    0.00 2000000/2096539     find_clusters(std::vector<int, std::allocator<int> >&) [2]
-                0.00    0.00       1/3           find_clusters(std::vector<int, std::allocator<int> >&) [2]
-                0.00    0.00 2000002/2096543     find_clusters(std::vector<int, std::allocator<int> >&) [2]
-                0.00    0.00 2000000/2096539     find_clusters(std::vector<int, std::allocator<int> >&) [2]
-                0.00    0.00   25683/25916       find_clusters(std::vector<int, std::allocator<int> >&) [2]
-                0.00    0.00   25682/25911       find_clusters(std::vector<int, std::allocator<int> >&) [2]
-                0.00    0.00   25682/25910       find_clusters(std::vector<int, std::allocator<int> >&) [2]
+ [235] print(std::vector<int, std::allocator<int> > const&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&) [199] std::_Rb_tree_key_compare<std::less<int> >::_Rb_tree_key_compare() [141] std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_put_node(std::_Rb_tree_node<int>*)
+                0.00    0.00  600328/1031988     Find(std::vector<int, std::allocator<int> >&, int) [76]
+                0.00    0.00 4488686/8504319     Find(std::vector<int, std::allocator<int> >&, int) [76]
+[76]     0.0    0.00    0.00 1031988         Find(std::vector<int, std::allocator<int> >&, int) [76]
+                0.00    0.00  431660/1031988     Find(std::vector<int, std::allocator<int> >&, int) [76]
+  [76] Find(std::vector<int, std::allocator<int> >&, int) [82] std::_Rb_tree_iterator<int>::_Rb_tree_iterator(std::_Rb_tree_node_base*) [166] std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node::_Alloc_node(std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >&)
+                0.00    0.00  215830/215830      Union(std::vector<int, std::allocator<int> >&, int, int) [89]
+                0.00    0.00  215830/8504319     Union(std::vector<int, std::allocator<int> >&, int, int) [89]
+                0.00    0.00  431660/1031988     Union(std::vector<int, std::allocator<int> >&, int, int) [89]
+[89]     0.0    0.00    0.00  215830         Union(std::vector<int, std::allocator<int> >&, int, int) [89]
+                0.00    0.00  215830/215830      Union(std::vector<int, std::allocator<int> >&, int, int) [89]
+                0.00    0.00  215830/215830      Union(std::vector<int, std::allocator<int> >&, int, int) [89]
+  [89] Union(std::vector<int, std::allocator<int> >&, int, int) [110] std::_Rb_tree_iterator<int>::operator--() [140] std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_get_node()
+                0.03    0.00       1/1           HoshenKopelman(std::vector<int, std::allocator<int> >&) [16]
+[16]     9.7    0.03    0.00       1         HoshenKopelman(std::vector<int, std::allocator<int> >&) [16]
+                0.00    0.00 2799801/8504319     HoshenKopelman(std::vector<int, std::allocator<int> >&) [16]
+                0.00    0.00  215830/215830      HoshenKopelman(std::vector<int, std::allocator<int> >&) [16]
+                0.00    0.00   96163/96163       HoshenKopelman(std::vector<int, std::allocator<int> >&) [16]
+                0.00    0.00       1/74          HoshenKopelman(std::vector<int, std::allocator<int> >&) [16]
+                0.00    0.00       1/9           HoshenKopelman(std::vector<int, std::allocator<int> >&) [16]
+                0.00    0.00       1/2           HoshenKopelman(std::vector<int, std::allocator<int> >&) [16]
+  [16] HoshenKopelman(std::vector<int, std::allocator<int> >&) [54] std::_Rb_tree_iterator<std::pair<int const, int> >::_Rb_tree_iterator(std::_Rb_tree_node_base*) [38] std::_Rb_tree_iterator<int> std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_insert_<int&, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node>(std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, int&, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node&)
+                0.01    0.21       1/1           find_clusters(std::vector<int, std::allocator<int> >&) [2]
+[2]     71.0    0.01    0.21       1         find_clusters(std::vector<int, std::allocator<int> >&) [2]
+                0.00    0.18 2025657/2025659     find_clusters(std::vector<int, std::allocator<int> >&) [2]
+                0.03    0.00       1/1           find_clusters(std::vector<int, std::allocator<int> >&) [2]
+                0.00    0.00       1/1           find_clusters(std::vector<int, std::allocator<int> >&) [2]
+                0.00    0.00 2000002/2096169     find_clusters(std::vector<int, std::allocator<int> >&) [2]
+                0.00    0.00 2000000/2096165     find_clusters(std::vector<int, std::allocator<int> >&) [2]
+                0.00    0.00 2000000/2096165     find_clusters(std::vector<int, std::allocator<int> >&) [2]
+                0.00    0.00  600328/1031988     find_clusters(std::vector<int, std::allocator<int> >&) [2]
+                0.00    0.00   25658/25894       find_clusters(std::vector<int, std::allocator<int> >&) [2]
+                0.00    0.00   25657/25889       find_clusters(std::vector<int, std::allocator<int> >&) [2]
+                0.00    0.00   25657/25888       find_clusters(std::vector<int, std::allocator<int> >&) [2]
                 0.00    0.00       3/21          find_clusters(std::vector<int, std::allocator<int> >&) [2]
                 0.00    0.00       3/21          find_clusters(std::vector<int, std::allocator<int> >&) [2]
                 0.00    0.00       1/6           find_clusters(std::vector<int, std::allocator<int> >&) [2]
@@ -105,23 +104,24 @@ index % time    self  children    called     name
                 0.00    0.00       1/4           find_clusters(std::vector<int, std::allocator<int> >&) [2]
                 0.00    0.00       2/3           find_clusters(std::vector<int, std::allocator<int> >&) [2]
                 0.00    0.00       1/3           find_clusters(std::vector<int, std::allocator<int> >&) [2]
-   [2] find_clusters(std::vector<int, std::allocator<int> >&) [207] std::__new_allocator<int>::~__new_allocator() [60] std::_Rb_tree_iterator<int> std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_insert_<int const&, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node>(std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, int const&, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node&)
-                0.00    0.00       1/1           detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-                0.00    0.00    6447/2006447     detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-[48]     0.0    0.00    0.00       1         detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-                0.00    0.00    2449/2449        detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-                0.00    0.00     227/227         detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-                0.00    0.00     229/25916       detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-                0.00    0.00     227/25911       detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-                0.00    0.00     227/25910       detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-                0.00    0.00       1/74          detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-                0.00    0.00       1/9           detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-                0.00    0.00       5/6           detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-                0.00    0.00       5/5           detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-                0.00    0.00       3/4           detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-                0.00    0.00       3/4           detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-                0.00    0.00       1/1           detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-                0.00    0.00       1/1           detec_perc(std::vector<int, std::allocator<int> > const&) [48]
-  [48] detec_perc(std::vector<int, std::allocator<int> > const&) [194] std::__new_allocator<int>::deallocate(int*, unsigned long) [50] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::~_Rb_tree()
+                0.00    0.00       1/3           find_clusters(std::vector<int, std::allocator<int> >&) [2]
+   [2] find_clusters(std::vector<int, std::allocator<int> >&) [198] std::__new_allocator<int>::~__new_allocator() [42] std::_Rb_tree_iterator<int> std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_insert_<int const&, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node>(std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, int const&, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node&)
+                0.00    0.00       1/1           detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+[35]     0.0    0.00    0.00       1         detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+                0.00    0.00    2393/2393        detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+                0.00    0.00     230/230         detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+                0.00    0.00    6391/2006391     detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+                0.00    0.00     232/25894       detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+                0.00    0.00     230/25889       detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+                0.00    0.00     230/25888       detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+                0.00    0.00       1/74          detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+                0.00    0.00       1/9           detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+                0.00    0.00       5/6           detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+                0.00    0.00       5/5           detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+                0.00    0.00       3/4           detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+                0.00    0.00       3/4           detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+                0.00    0.00       1/1           detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+                0.00    0.00       1/1           detec_perc(std::vector<int, std::allocator<int> > const&) [35]
+  [35] detec_perc(std::vector<int, std::allocator<int> > const&) [185] std::__new_allocator<int>::deallocate(int*, unsigned long) [231] std::_Rb_tree<int, std::pair<int const, int>, std::_Select1st<std::pair<int const, int> >, std::less<int>, std::allocator<std::pair<int const, int> > >::~_Rb_tree()
 
 # --- Fin del reporte filtrado ---
