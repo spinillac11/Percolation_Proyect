@@ -24,9 +24,9 @@ for file, label, color in zip(files, labels, colors):
 
     plt.errorbar(x, mean, yerr=std, label=label, fmt='-o', capsize=5, color=color)
 
-plt.xlabel("L (Size)")
-plt.ylabel("Execution Time (ms)")
-plt.title("Execution Time vs L for Optimization Levels")
+plt.xlabel("L")
+plt.ylabel("Tiempo de ejecución (ms)")
+plt.title("Tiempo de ejecución vs L por Nivel de optimización")
 plt.legend()
 plt.grid(True, which='both', linestyle='--', linewidth=0.5)
 plt.tight_layout()
