@@ -28,7 +28,7 @@ Obtención datos y gráfica para análisis de niveles de optimización:
 Ejecución con L = 4 Y P = 0.6:
   make simul
 
-Testing:
+Testing (hacer "sapck load catch2" antes de ejecutar):
   make test
 
 Artículo compilado con main.tex:
