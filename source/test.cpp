@@ -58,7 +58,7 @@ TEST_CASE("Union-Find algorithm and path compresion test") {
 TEST_CASE("Hoshen-Kopelman, find_clusters and size test") {
 
     SECTION("Hoshen-Kopelman test"){
-        // Todos conectados
+        // All connected
         Vec lattice = {
         1, 1, 0, 0,
         0, 1, 0, 1,
