@@ -56,26 +56,26 @@ Limpiar
 ```text
 .
 ├── Makefile
-├── include/                # Archivos de cabecera (.hpp/.h)
-│   └── include.h           # Declaración de funciones
-├── source/                 # Código fuente en C++
-│   ├── main.cpp              
-│   ├── functions.cpp       # Implementación de funciones
-│   └── test.cpp            # Implementación de funciones
-├── build/                  # Archivos objeto (.o) generados
-├── figures/                # Figuras generadas (PDF, SVG, etc.)
-├── data/                   # Datos de salida para análisis de percolación
-├── graphics/               # Scripts Python para graficar (simul.py, plot_opti.py, analysis.py, etc.)
-│   ├── analysis.py         # Gráficas análisis de percolación              
-│   ├── plot_opti.py        # Gráficas análisis de niveles de optimización
-│   └── simul.py            # Graficas de red de clusters 
-├── script/                 # Scripts bash 
-    ├── analysis.sh         # Datos análisis de percolación   
-    ├── optimization.sh     # Datos de niveles de optimización
-    ├── organize_report_perf.sh # Filtrar reporte de perf
-    └── organize_report_gprof.sh # Filtrar reporte de gprof                
-├── out/                    # Salida de compilación LaTeX ==> PDF del articulo
-├── out_report/             # Reportes de profiling (gprof, perf)
-└── main.tex                # Fuente principal del informe en LaTeX
+├── include/                      # Archivos de cabecera (.hpp/.h)
+│   └── include.h                 # Declaración de funciones
+├── source/                       # Código fuente en C++
+│   ├── main.cpp                    
+│   ├── functions.cpp             # Implementación de funciones
+│   └── test.cpp                  # Implementación de funciones
+├── build/                        # Archivos objeto (.o) generados
+├── figures/                      # Figuras generadas (PDF, SVG, etc.)
+├── data/                         # Datos de salida para análisis de percolación
+├── graphics/                     # Scripts Python para graficar 
+│   ├── analysis.py               # Gráficas análisis de percolación              
+│   ├── plot_opti.py              # Gráficas análisis de niveles de optimización
+│   └── simul.py                  # Graficas de red de clusters 
+├── script/                       # Scripts bash 
+    ├── analysis.sh               # Datos análisis de percolación   
+    ├── optimization.sh           # Datos de niveles de optimización
+    ├── organize_report_perf.sh   # Filtrar reporte de perf
+    └── organize_report_gprof.sh  # Filtrar reporte de gprof                
+├── out/                          # Salida de compilación LaTeX ==> PDF del articulo
+├── out_report/                   # Reportes de profiling (gprof, perf)
+└── main.tex                      # Fuente principal del informe en LaTeX
 
 
