@@ -30,7 +30,7 @@ grid = ax.pcolormesh(mapped_clusters, cmap=cmap60,
 ax.set_aspect('equal')
 ax.invert_yaxis()
 
-# Escribir IDs si es pequeño...
+
 rows, cols = data_clusters.shape
 if rows <= 50:
     for i in range(rows):
@@ -54,7 +54,7 @@ grid = ax.pcolormesh(mapped_lattice, cmap=cmap60,
 ax.set_aspect('equal')
 ax.invert_yaxis()
 
-# Escribir IDs si es pequeño...
+
 rows, cols = data_lattice.shape
 if rows <= 50:
     for i in range(rows):
