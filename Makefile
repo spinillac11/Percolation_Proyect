@@ -57,11 +57,11 @@ run: $(EXE)
 	echo "  Ejecutando $(EXE) con parámetros: N=$$N  p=$$P"; \
 	./$(EXE) $$N $$P; \
 	echo; \
-	echo "  Ahora generando gráfica con simul.py..."; \
+	echo "  Generando gráfica con simul.py..."; \
 	mkdir -p $(FIG)
 	python3 $(GRP)/simul.py; \
 	echo; \
-	echo "  Listo: se creó 'figures/cluster.pdf'."
+	echo "  Listo: se creó 'figures/cluster.pdf' y 'figures/lattice.pdf'."
 
 analysis: $(EXE)
 	@echo "Ejecutando análisis de percolación"	
