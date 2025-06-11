@@ -1,6 +1,6 @@
 # Percolation Project
 
-Este proyecto implementa un simulador de percolación por sitios en una red cuadrada \(L \times L\), con identificación de clusters mediante el algoritmo de Hoshen-Kopelman, y análisis de desempeño (optimización, profiling con gprof y perf, flamegraphs). Además incluye scripts en Python para graficar resultados y generación automática de informe en LaTeX.
+Este proyecto implementa un simulador de percolación en c++ por sitios en una red cuadrada L^2, con identificación de clusters mediante el algoritmo de Hoshen-Kopelman, y análisis de desempeño (optimización, profiling con gprof y perf, flamegraphs). Además incluye scripts en Python para graficar resultados y generación automática de informe en LaTeX.
 
 ---
 
