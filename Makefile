@@ -71,8 +71,6 @@ optimization: $(SRC)/main.cpp $(SRC)/functions.cpp
 	bash $(SCP)/$@.sh
 	python3 graphics/plot_opti.py 
 
-
-
 simul: $(EXE)
 	@echo "==> Ejecutando simulación con N=4, p=0.6"
 	./$(EXE) 4 0.6
